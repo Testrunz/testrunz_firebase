@@ -5,6 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import { useStateValue } from '../../data/StateProvider';
 import { actionTypes } from "../../data/reducer"
+import { GiSoapExperiment } from 'react-icons/gi';
+
 const useStyles = makeStyles((theme) => ({
   root: {
    // flexGrow: 1,
@@ -37,13 +39,13 @@ export default function NavBar() {
   }
   const login  = (
     <>
-    <Button onClick={home} color="inherit" >TESTRUNZ@15/12</Button>
+    <Button onClick={home} color="inherit" >TESTRUNZ <GiSoapExperiment/> </Button>
     <Button onClick={runz} color="inherit"  edge="end">logout</Button>
     
     </>
   )
   const logout  = (
-    <Button onClick={runz} color="inherit"  >TESTRUNZ@15/12</Button>
+    <Button onClick={runz} color="inherit"  >TESTRUNZ <GiSoapExperiment/></Button>
   )
  
   return (
