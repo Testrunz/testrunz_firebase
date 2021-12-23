@@ -11,22 +11,24 @@ from BEE import BEE
 from FirstYearCivil import FirstYCivil
 from MaterialAndMetallorgy import MAM
 from Dom import Dom
-#from ManufacturingProcess1 import MP1
-#from ManufacturingProcess2 import MP2
+from ManufacturingProcess1 import MP1
+from ManufacturingProcess2 import MP2
 from CommunicationLab1 import CL1
 from Network import NT
 from CommunicationLab2 import Com2
 from CommunicationLab3 import com3
-from PowerElectronics import PowerEle
-#from ElectronicDeviceCircuit import EDC
+from PowerElectronic import PowerEle
+from ElectronicDeviceCircuit import EDC
 from ElectronicCircuit1 import EC
 from ElectronicCircuit2 import EC2
 from ElectronicMachinary1 import EM1
 from ElectronicMachinary2 import EM2
 from ThermalEngineeringLab1 import TE1
+from Thermal_Laboratory_II import TE2
 from FirstYearGeotechnical import FirstYGtech
 from Electronic2 import E2
 from Electronic1 import EL1
+#from Measurementandcontrol import MAC
 def main(argv):
     argument = ''
     usage = 'usage: script.py -f <sometext>'
@@ -212,19 +214,19 @@ def main(argv):
                     MP1(argument).Cube()
                 elif((argument[len(argument) -2] == "Cube") and (argument[len(argument) -1] == "Shaping")):
                     MP1(argument).Cube_Shaping()
-                elif((argument[len(argument) -4] == "Facing") and (argument[len(argument) -3] == "and") and (argument[len(argument) -2] == "Plain") and (argument[len(argument) -1] == "Turning")):
+                elif((argument[len(argument) -3] == "Facing") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "Plain")):
                     MP1(argument).Facing()
                 elif((argument[len(argument) -2] == "Step") and (argument[len(argument) -1] == "Milling")):
                     MP1(argument).Step()
                 elif((argument[len(argument) -2] == "Step") and (argument[len(argument) -1] == "Turning")):
                     MP1(argument).Turning()
-                elif((argument[len(argument) -4] == "Taper") and (argument[len(argument) -3] == "Turning") and (argument[len(argument) -2] == "Using") and (argument[len(argument) -1] == "Compound")):
+                elif((argument[len(argument) -2] == "Taper") and (argument[len(argument) -1] == "turning")):
                     MP1(argument).Compound()
                 elif((argument[len(argument) -3] == "Drilling") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "boring")):
                     MP2(argument).Drilling()
                 elif((argument[len(argument) -3] == "Turning") and (argument[len(argument) -2] == "between") and (argument[len(argument) -1] == "centers")):
                     MP2(argument).Turning()
-                elif((argument[len(argument) -4] == "Multi") and (argument[len(argument) -3] == "start") and (argument[len(argument) -2] == "thread") and (argument[len(argument) -1] == "cutting")):
+                elif((argument[len(argument) -3] == "Start") and (argument[len(argument) -2] == "thread") and (argument[len(argument) -1] == "cut")):
                     MP2(argument).Multi()
                 elif((argument[len(argument) -2] == "Eccentric") and (argument[len(argument) -1] == "turning")):
                     MP2(argument).Eccentric()
@@ -232,7 +234,7 @@ def main(argv):
                     MP2(argument).Study()
                 elif((argument[len(argument) -3] == "Drilling") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "tapping")):
                     MP2(argument).Drilling()
-                elif((argument[len(argument) -4] == "Shaping") and (argument[len(argument) -3] == "and") and (argument[len(argument) -2] == "V-slot") and (argument[len(argument) -1] == "grooving")):
+                elif((argument[len(argument) -2] == "V-SLOT") and (argument[len(argument) -1] == "GROOVING")):
                     MP2(argument).Shaping()
                 elif((argument[len(argument) -2] == "Spline") and (argument[len(argument) -1] == "milling")):
                     MP2(argument).Spline()
@@ -390,6 +392,8 @@ def main(argv):
                     TE1(argument).BOMB()
                 elif((argument[len(argument) -2] == "PIN") and (argument[len(argument) -1] == "FIN")):
                     TE1(argument).Pin_Fin()
+                elif((argument[len(argument) -2] == "COUNTER") and (argument[len(argument) -1] == "FLOW")):
+                    TE1(argument).Counter_flow()
                 elif((argument[len(argument) -3] == "TIME") and (argument[len(argument) -2] == "DIVISION") and (argument[len(argument) -1] == "MULTIPLEXING")):
                     Com2(argument).TIME_DIVISION_MULTIPLEXING()
                 elif((argument[len(argument) -5] == "Mary") and (argument[len(argument) -4] == "ASK") and (argument[len(argument) -3] == "FSK") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "PSK")):                    
@@ -518,6 +522,38 @@ def main(argv):
                     EM2(argument).Direct_and_Quadrature_axis()
                 elif((argument[len(argument) -3] == "THREE-PHASE") and (argument[len(argument) -2] == "SQUIRREL") and (argument[len(argument) -1] == "CAGE")):                   
                     EM2(argument).Three_phase()
+                elif((argument[len(argument) -4] == "SINGLE") and  (argument[len(argument) -3] == "PHASE") and  (argument[len(argument) -2] == "ENERGY") and  (argument[len(argument) -1] == "METER")):
+                    MAC(argument).Single()
+                elif((argument[len(argument) -4] == "THREE") and  (argument[len(argument) -3] == "PHASE") and  (argument[len(argument) -2] == "ENERGY") and  (argument[len(argument) -1] == "METER")):
+                    MAC(argument).Three()
+                elif((argument[len(argument) -2] == "NETWORK") and  (argument[len(argument) -1] == "THEOREMS")):
+                    MAC(argument).Network()
+                elif((argument[len(argument) -3] == "PARAMETERS") and  (argument[len(argument) -2] == "USING") and  (argument[len(argument) -1] == "BRIDGES")):
+                    MAC(argument).Bridge()
+                elif((argument[len(argument) -3] == "VOLTMETER") and  (argument[len(argument) -2] == "AND") and  (argument[len(argument) -1] == "AMMETER")):
+                    MAC(argument).VOLTMETER()
+                elif((argument[len(argument) -3] == "VOLTAGE") and  (argument[len(argument) -2] == "TO") and  (argument[len(argument) -1] == "CURRENT")):
+                    MAC(argument).VOLTAGE()
+                elif((argument[len(argument) -2] == "INSTRUMENTATION") and  (argument[len(argument) -1] == "AMPLIFIER")):
+                    MAC(argument).INSTRUMENTATION()
+                elif((argument[len(argument) -4] == "TRANSFER") and  (argument[len(argument) -3] == "FUNCTION") and  (argument[len(argument) -2] == "FOR") and  (argument[len(argument) -1] == "ARMATURE")):
+                    MAC(argument).TRANSFER()
+                elif((argument[len(argument) -3] == "CHARACTERISTICS") and  (argument[len(argument) -2] == "OF") and  (argument[len(argument) -1] == "LDR")):
+                    MAC(argument).LDR()
+                elif((argument[len(argument) -3] == "RTD") and  (argument[len(argument) -2] == "AND") and  (argument[len(argument) -1] == "THERMOCOUPLE")):
+                    MAC(argument).THERMOCOUPLE()
+                elif((argument[len(argument) -3] == "Analog") and  (argument[len(argument) -2] == "frequency") and  (argument[len(argument) -1] == "meter")):
+                    MAC(argument).Analog()
+                elif((argument[len(argument) -3] == "DISPLACEMENT") and  (argument[len(argument) -2] == "USING") and  (argument[len(argument) -1] == "TRANSDUCER")):
+                    MAC(argument).DISPLACEMENT()
+                elif((argument[len(argument) -3] == "PORT") and  (argument[len(argument) -2] == "TIMING") and  (argument[len(argument) -1] == "DIAGRAM")):
+                    TE2(argument).Port_diagram()
+                elif((argument[len(argument) -3] == "VALVE") and  (argument[len(argument) -2] == "TIMING") and  (argument[len(argument) -1] == "DIAGRAM")):
+                    TE2(argument).Valve_diagram()  
+                elif((argument[len(argument) -4] == "SINGLE") and  (argument[len(argument) -3] == "CYLINDER") and  (argument[len(argument) -2] == "PETROL") and  (argument[len(argument) -1] == "ENGINE")):
+                    TE2(argument).Single_petrol()
+                elif((argument[len(argument) -3] == "Heat") and  (argument[len(argument) -2] == "four") and  (argument[len(argument) -1] == "stroke")):
+                    TE2(argument).heat_4stroke()    
                 else:
                     Dummy(argument).dummy()
 
