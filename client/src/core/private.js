@@ -22,29 +22,38 @@ const useStyles = makeStyles({
 
 const Private = (props) => {
   const [_id, set_id] = useState("")
-  const [credit, setCredit] = useState({
-    designation: "",
-    collegeName: "",
-    department: "",
-    country: "",
-    state: "",
-    year: "",
-    semester: "",
-    showOnce: false,
-    btnText: "Submit",
-  });
+  const [designationerror, setDesignationerror] = useState()
+  const [collegenameerror, setCollegenameerror] = useState()
+  const [departmenterror, setDepartmenterror] = useState()
+  const [countryerror, setCountryerror] = useState()
+  const [stateerror, setStateerror] = useState()
+  const [yearerror, setYearerror] = useState()
+  const [semestererror, setSemestererror] = useState()
+
+  const [designation, setDesignation] = useState("")
+  const [collegeName, setCollegeName] = useState("")
+  const [department, setDepartment] = useState("")
+  const [country, setCountry] = useState("")
+  const [state, setState] = useState("")
+  const [year, setYear] = useState("")
+  const [semester, setSemester] = useState("")
+  const [showOnce, setShowOnce] = useState(false)
+  const [btnText, setBtnText] = useState("submit")
+  
   const [goTo, setGoTo] = useState(false);
+
   const [{ user }, dispatch] = useStateValue();
   const classes = useStyles();
 
 
   useEffect(()=>{
    loadProfile()
+  
   },[])
 
 
   const loadProfile = () => {
-   let idval = JSON.parse(localStorage.getItem('userdetail'))._id
+ let idval = JSON.parse(localStorage.getItem('userdetail'))._id
    
     axios({
       method: "GET",
@@ -62,17 +71,16 @@ const Private = (props) => {
           semester,
           showOnce,
         } = response.data;
-        setCredit({
-          ...credit,
-          designation,
-          collegeName,
-          department,
-          country,
-          state,
-          year,
-          semester,
-          showOnce,
-        });
+        
+          setDesignation(designation)
+          setCollegeName(collegeName)
+          setDepartment(department)
+          setCountry(country)
+          setState(state)
+          setYear(year)
+          setSemester(semester)
+          setShowOnce(showOnce)
+        
       })
       .catch((err) => {
         console.log("recived error",err.response.data.error);
@@ -85,26 +93,62 @@ const Private = (props) => {
         }
       });
     set_id(idval)
-  };
+   };
 
-  const {
-    designation,
-    collegeName,
-    department,
-    country,
-    state,
-    year,
-    semester,
-    btnText,
-  } = credit;
+  // const {
+  //   designation,
+  //   collegeName,
+  //   department,
+  //   country,
+  //   state,
+  //   year,
+  //   semester,
+  //   btnText,
+  // } = credit;
 
-  const handleChange = (name) => (event) => {
-    setCredit({ ...credit, [name]: event.target.value, });
-  };
+ 
 
   const clickSubmit = (event) => {
     event.preventDefault();
-    setCredit({ ...credit, btnText: "Submitting" });
+    setDesignationerror()
+    setCollegenameerror()
+    setDepartmenterror()
+    setCountryerror()
+    setStateerror()
+    setYearerror()
+    setSemestererror()
+
+  if (designation === ""||null ) {
+      console.log("no name")
+      setDesignationerror("*Designation required*")
+    }
+  else if (collegeName === ""||null ) {
+    console.log("no email")
+    setCollegenameerror("*College Name required*")
+  } 
+  else if (department === ""||null ) {
+    console.log("no password")
+    setDepartmenterror("*Department required*")
+  }
+  else if (country === ""||null ) {
+    console.log("no email")
+    setCountryerror("*Country required*")
+  } 
+  else if (state === ""||null ) {
+    console.log("no password")
+    setStateerror("*State required*")
+  }
+  else if ((designation === "student") && (year === ""||null) ) {
+    console.log("no email")
+    setYearerror("*Year required  enter a valid number*")
+  } 
+  else if ( (designation === "student") && (semester === ""||null)) {
+    console.log("no password")
+    setSemestererror("*Semester required enter a valid number*")
+  }
+ else{
+ 
+   setBtnText("Submitting");
     fetch(`${process.env.REACT_APP_API}/users/update`, {
       method: "PATCH",
       headers: {
@@ -122,19 +166,22 @@ const Private = (props) => {
         showOnce: true,
       }),
     })
-      .then((response) => {
-        setCredit({
-          ...credit,
-          designation: "",
-          collegeName: "",
-          department: "",
-          country: "",
-          state: "",
-          year: "",
-          semester: "",
-          btnText: "Submitted",
-          showOnce: true,
-        });
+//       .then((response) => {
+//         setCredit({
+//           ...credit,
+//           designation: "",
+//           collegeName: "",
+//           department: "",
+//           country: "",
+//           state: "",
+//           year: "",
+//           semester: "",
+//           btnText: "Submitted",
+//           showOnce: true,
+//         });
+.then((response) => {
+;
+
 
         fetch(`${process.env.REACT_APP_API}/users/${user._id}`)
         .then(res => res.json())
@@ -151,9 +198,15 @@ const Private = (props) => {
   })
       .catch ((error) => {
   console.log("Sign-up error", error);
-  setCredit({ ...credit, btnText: "Submit" });
+  setBtnText("Submit")
   toast.error("error.response.data.error");
 });
+
+
+  
+
+ }
+
   };
 
 
@@ -162,9 +215,9 @@ return (
     <CardContent style={{ alignItems: "center" }}>
       <div >
         <ToastContainer />
-        {credit.showOnce && props.history.push("/app")}
+        {showOnce && props.history.push("/app")}
 
-        {(credit.showOnce === false) && (<> <p className="lead text-center">Profile Update</p>
+        {(showOnce === false) && (<> <p className="lead text-center">Profile Update</p>
           <form>
             <div className="form-group">
               <label className="text-muted">Designation</label>
@@ -172,7 +225,7 @@ return (
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={designation}
-                onChange={handleChange("designation")}
+                onChange={e => setDesignation(e.target.value)}
                 // text={text.postTo}
                 className="form-control"
                 name="postTo">
@@ -181,61 +234,54 @@ return (
                 <MenuItem value="admin">Admin</MenuItem>
               </Select>
             </div>
-
-            {/* 
-      <div className="form-group">
-        <label className="text-muted">Designation</label>
-        <input
-          onChange={handleChange("designation")}
-          type="text"
-          className="form-control"
-          value={designation}
-        /> 
-      </div> */}
-
-
+            <p className='errormsg'>{designationerror}</p>
             <div className="form-group">
               <label className="text-muted">College Name</label>
               <input
-                onChange={handleChange("collegeName")}
+                onChange={e => setCollegeName(e.target.value)}
                 type="text"
                 className="form-control"
                 value={collegeName}
               />
             </div>
+            <p className='errormsg'>{collegenameerror}</p>
+            
             <div className="form-group">
               <label className="text-muted">Department</label>
               <input
-                onChange={handleChange("department")}
+                onChange={e => setDepartment(e.target.value)}
                 type="text"
                 className="form-control"
                 value={department}
               />
             </div>
+            <p className='errormsg'>{departmenterror}</p>
             <div className="form-group">
               <label className="text-muted">Country</label>
               <input
-                onChange={handleChange("country")}
+                onChange={e => setCountry(e.target.value)}
                 type="text"
                 className="form-control"
                 value={country}
               />
             </div>
+            <p className='errormsg'>{countryerror}</p>
             <div className="form-group">
               <label className="text-muted">State</label>
               <input
-                onChange={handleChange("state")}
+                onChange={e => setState(e.target.value)}
                 type="text"
                 className="form-control"
                 value={state}
               />
             </div>
-            {credit.designation === "student" && (
+            <p className='errormsg'>{stateerror}</p>
+            {designation === "student" && (
               <>
                 <div className="form-group">
                   <label className="text-muted">Year</label>
                   <input
-                    onChange={handleChange("year")}
+                    onChange={e => setYear(e.target.value)}
                     className="form-control"
                     value={year}
                     type="number"
@@ -243,10 +289,11 @@ return (
                     max="4"
                   />
                 </div>
+                <p className='errormsg'>{yearerror}</p>
                 <div className="form-group">
                   <label className="text-muted">Semester</label>
                   <input
-                    onChange={handleChange("semester")}
+                    onChange={e => setSemester(e.target.value)}
                     className="form-control"
                     value={semester}
                     type="number"
@@ -254,6 +301,7 @@ return (
                     max="8"
                   />
                 </div>
+                <p className='errormsg'>{semestererror}</p>
               </>
             )}
             <br />
