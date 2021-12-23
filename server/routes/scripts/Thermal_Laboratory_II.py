@@ -113,6 +113,7 @@ class TE2:
         Qw4=Qw(float(argument[51]))
         Qw5=Qw(float(argument[56]))
         Ha1=Ha
+        Ha2 = ha
 
 
 
