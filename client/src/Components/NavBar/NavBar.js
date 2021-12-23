@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import { useStateValue } from '../../data/StateProvider';
 import { actionTypes } from "../../data/reducer"
 import { GiSoapExperiment } from 'react-icons/gi';
+import { BiLogOutCircle } from 'react-icons/bi';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +41,7 @@ export default function NavBar() {
   const login  = (
     <>
     <Button onClick={home} color="inherit" >TESTRUNZ <GiSoapExperiment/> </Button>
-    <Button onClick={runz} color="inherit"  edge="end">logout</Button>
+    <Button onClick={runz} color="inherit"  edge="end">logout <BiLogOutCircle/></Button>
     
     </>
   )
