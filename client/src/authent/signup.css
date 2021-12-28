@@ -89,16 +89,23 @@ section .container .user .formBx form input {
   font-weight: 300;
 }
 
-section .container .user .formBx form button {
-  max-width: 100px;
+ section .container .user .formBx form button {
+  /* position: relative;
+  max-width: 1700px; */
   background: #3F51B5;
   color: #fff;
-  cursor: pointer;
+  /*cursor: pointer;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 1px;
   transition: 0.5s;
   margin-bottom: 10px;
+  margin: 8px 0;
+  padding: 10px; */
+} 
+section .container .user .formBx form .googlebutton{
+  background: #fff;
+  color: rgb(65, 64, 64);
 }
 /* section .container .user .formBx form button {
   max-width: 100px;
@@ -171,4 +178,19 @@ section .container .signinupBx .imgBx {
   margin-bottom: 0;
   color: red;
   font-size: x-small;
+}
+.divider {
+  border-top: 1px solid #d9dadc;
+  display: block;
+  line-height: 1px;
+  margin: 15px 0;
+  position: relative;
+  text-align: center;
+}
+.or{
+  background: #fff;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 0 20px;
+    text-transform: uppercase;
 }

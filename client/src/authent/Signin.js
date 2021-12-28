@@ -109,8 +109,11 @@ const Signin = () => {
                   placeholder="Password"
                   value={password}
                 />
-                <Button  variant="contained" onClick={authsignin}>Submit</Button>
-
+                
+                <Button  variant="contained"  style={{background:"#3F51B"}} onClick={authsignin}>Submit</Button>
+            
+                <br/>
+                <div className='divider'><strong className="or">or</strong> </div>
                 <Google1/>
                 <p class="signinup">
                   Don't have an account ?

@@ -162,7 +162,7 @@ const Signup = () => {
                 <p className='errormsg'>{confirmpassworderror}</p>
                 <p className='errormsg'>{mismatch}</p>
                 
-                <Button  variant="contained" onClick={authsignup}>Submit</Button>
+                <Button  variant="contained" style={{background:"#3F51B"}}  onClick={authsignup}>Submit</Button>
                 <p className="signinup">
                   Already have an account ?
                   <Link to="/signin" className="card-link" > Sign in.</Link>

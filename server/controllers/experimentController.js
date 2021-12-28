@@ -29,7 +29,8 @@ const getExpAllUser = async function (req, res, next) {
 const getSingleUser = async function (req, res, next) {
   try {
     const user = await User.findOne({ _id: req.params._id });
-    // console.log("hello",user)
+     console.log("hello",user)
+    console.log("hello",req.params._id)
      res.json(user);
   } catch (err) {
     console.error(err);

@@ -15,6 +15,8 @@ import { ImCloudUpload } from 'react-icons/im';
 import { BsFillCalculatorFill } from 'react-icons/bs';
 import "./layout.css"
 import ApiUrl from "../../ServerApi";
+import Swal from 'sweetalert2'
+// import { stableValueHash } from "react-query/types/core/utils";
 
 
 
@@ -40,6 +42,9 @@ const Context = ({ value, dataV }) => {
   const [data1, setData1] = React.useState({});
   const [isData, setIsData] = React.useState(false);
   const [result, setResult] = React.useState({});
+  const [accodicon, setAccodicon] = React.useState("none");
+  const [errorvalue, setErrorvalue]=React.useState();
+
   let inputEl = document.querySelectorAll("input");
   let inputElArr = Array.from(inputEl).slice(1);
 
@@ -61,37 +66,77 @@ const Context = ({ value, dataV }) => {
 
   const retrive = async(event) => {
     event.preventDefault();
-    const res = await fetch(`${ApiUrl}/experiments/${window.location.href.split("/")[5]}`);
-    const ress =await res.json()
-    setData1(ress.datas)
-     console.log("i am here", data1)
-    if (data1) {
-       for (const [key, value] of Object.entries(data1)) {
-       document.getElementById(key).value = value
-      }
-   }
+    let expid =  localStorage.getItem("userId")
+    // const res = await fetch(`${ApiUrl}/experiments/${window.location.href.split("/")[5]}`);
+    // const ress =await res.json()
+  
+    fetch(`${ApiUrl}/experiments/${expid}`)
+    .then((res)=>res.json())
+    .then(data =>{
+      console.log("i am ", data)
+      console.log("i am here", data.datas)
+      const filtered = Object.entries(data.datas).filter(([key, value]) => key != '');
+      const obj = Object.fromEntries(filtered)
+      console.log("i am here too",obj)
+      for (const [key, values] of Object.entries(obj)) {
+
+        document.getElementById(key).value=values
+         }
+     
+    
+    } );
+ 
+ 
+
+
+  //   setData1(ress.datas)
+    
+   
   }
   React.useEffect(init, [isData]);
 
 
 
+const accod=()=>{
+  if (!errorvalue){
+  axios.get(`${ApiUrl}/runPython`).then((res) => {
+    setResult(res.data);
+  })
+  }
+  }
 
 
 
   const Calculate = (event) => {
     event.preventDefault();
-    fetch(`${ApiUrl}/runPython/`, {
-      method: "POST",
-      body: JSON.stringify({
-        ...data,
-        title: `${dataV && dataV?.experimentName}`,
-      }),
-      headers: { "Content-Type": "application/json" },
-    }).then(function (response) {
-      return response.json();
-    });
-    setIsData((prev) => !prev);
+    init()
+    let vals = Object.values(data)
+    console.log("check data entry",data)
+    console.log("check vals entry",vals)
+    const empty = vals.filter(item => item  === "");
+    console.log("total data",vals.length,"empty data",empty.length,"filled data", (vals.length-empty.length))
+    setAccodicon("block")
+    if (empty.length > 0){
+      setErrorvalue("Must fill all input Field")
+    }
+    else if(empty.length === 0){
+      setErrorvalue()
+    }
+
+    // console.log("check data entry",data)
+    // fetch(`${ApiUrl}/runPython/`, {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     ...data,
+    //     title: `${dataV && dataV?.experimentName}`,
+    //   }),
+    //   headers: { "Content-Type": "application/json" },
+    // }).then(function (response) {
+    //   return response.json();
+    // });
+    // setIsData((prev) => !prev);
   }
+
 
 
   const updateval = (event) => {
@@ -102,8 +147,29 @@ const Context = ({ value, dataV }) => {
       body: JSON.stringify({ ...data, id: window.location.href.split("/")[5] }),
       headers: { "Content-type": "application/json" },
     })
-      .then(res => console.log("result", res));
+      .then(res => {console.log("result", res)
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+      )
+      .catch((error) => {
+        console.error('Error:', error);
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'something went wrong Try again',
+          footer: error,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      });
   }
+
 
 
 
@@ -134,31 +200,29 @@ const Context = ({ value, dataV }) => {
          
           <Accordion>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+              expandIcon={<ExpandMoreIcon onClick={accod} style={{display:accodicon}}/>}
               aria-controls="panel1a-content"
               id="panel1a-header"
-              onClick={() => {
-                axios.get(`${ApiUrl}/runPython`).then((res) => {
-                  setResult(res.data);
-                  //console.log(res);
-                });
-              }}
+             
             >
               <Typography className={classes.heading}>Result</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
                 <p>Result will be shown here</p>
-                {Object.keys(result).map((item) => {
+                {errorvalue? <p>{errorvalue}</p>:
+                Object.keys(result).map((item) => {
                   return Object.keys(result[item][0]).map((i) => {
                     return (
-                      <p>
-                        {console.log(result[item][0][i])}
-                        {i} : {result[item][0][i]}
-                      </p>
+                      
+                       <p>{i} : {result[item][0][i]}</p> 
+                         
+                        
+                      
                     );
                   });
-                })}
+                })
+              }
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -166,7 +230,7 @@ const Context = ({ value, dataV }) => {
           <Stack spacing={2} direction="row" style={{ position: "relative", left: "25%" }}>
       
       <Button variant="contained" onClick={retrive}>Retrive &nbsp;&nbsp;&nbsp;<FaDownload/></Button>
-      <Button variant="contained" onClick={updateval}>Upload &nbsp;&nbsp;&nbsp;<ImCloudUpload/></Button>
+      <Button variant="contained" onClick={updateval}>Save &nbsp;&nbsp;&nbsp;<ImCloudUpload/></Button>
      
     </Stack>
           {/* <button onClick={retrive}>retrive</button>

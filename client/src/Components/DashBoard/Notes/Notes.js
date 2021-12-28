@@ -3,6 +3,8 @@ import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ApiUrl from "../../../ServerApi";
+import Button from "@material-ui/core/Button";
+
 
 const modules = {
   toolbar: [
@@ -54,7 +56,10 @@ const Notes = ({ data }) => {
   //console.log(dataV);
   return (
     <>
-      <button onClick={saving}>Save</button>
+      <Button onClick={saving} variant="contained" style={{background:"#3F51B5",color:"#fff"}}>Save</Button>
+      <br/>
+      <br/>
+      <br/>
       <ReactQuill
         theme="snow"
         modules={modules}

@@ -3,6 +3,7 @@ import { auth, provider } from "./firebase";
 import Button from '@mui/material/Button';
 import { useStateValue } from '../data/StateProvider';
 import { useHistory, Link } from "react-router-dom";
+import { FcGoogle } from 'react-icons/fc';
 
 import { actionTypes } from "../data/reducer"
 const Google1 = () => {
@@ -52,7 +53,7 @@ const Google1 = () => {
 
   return (
     <div>
-      <Button variant="contained" color="error"style={{backgroundColor:"#EA4335"}} onClick={googlesignin} > Google</Button>
+      <Button variant="outlined" className='googlebutton' onClick={googlesignin} startIcon={<FcGoogle />} >Signin With Google</Button>
     </div>
   )
 }

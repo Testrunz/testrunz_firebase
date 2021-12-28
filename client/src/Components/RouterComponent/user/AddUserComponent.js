@@ -59,7 +59,9 @@ const AddUserComponent = (props) => {
   const [{user}, dispatch] = useStateValue();
   const username = user.name
   const useridval = user._id
-
+  const [descriptionerror, setDescriptionerror] = useState();
+  const [laberror, setLaberror] = useState();
+  const [procedureerror, setProcedureerrorr] = useState();
 
   useEffect(() => {
     laboratries.then((res) => setOptions(res));
@@ -78,21 +80,39 @@ const AddUserComponent = (props) => {
 
   const saveUser = (e) => {
     e.preventDefault();
-    let user = {
-      studentName: username,
-      procedureDescription: data.procedureDescription,
-      labType: data.labType,
-      experimentName: data.experimentName,
-      userId: useridval
-    };
-    console.log("list user",user)
-    ApiService.addUser(user).then((res) => {
-      setMessage("User Added successfully.");
-      setTimeout(() => {
-        props.closeModal();
-      }, 1000);
-    });
-    setOpen(true);
+    setProcedureerrorr()
+    setLaberror()
+    setDescriptionerror()
+    if (data.procedureDescription === ""||null ) {
+      setDescriptionerror("*Write some descriptions*")
+    }
+  else if (data.labType === ""||null ) {
+    setLaberror("*choose a lab type*")
+  } 
+  else if (data.experimentName === ""||null ) {
+    setProcedureerrorr("*select a experiment from the list*")
+  }
+else{
+  let user = {
+    studentName: username,
+    procedureDescription: data.procedureDescription,
+    labType: data.labType,
+    experimentName: data.experimentName,
+    userId: useridval
+  };
+  console.log("list user",user)
+  ApiService.addUser(user).then((res) => {
+    setMessage("User Added successfully.");
+    setTimeout(() => {
+      props.closeModal();
+    }, 1000);
+  });
+  setOpen(true);
+}
+  
+    
+
+
   };
 
   const handleClose = (event, reason) => {
@@ -133,6 +153,7 @@ const AddUserComponent = (props) => {
           value={data.studentName}
           onChange={onChange}
         /> */}
+         <label>Description</label>
         <TextField
           type="text"
           placeholder="Experiment Description"
@@ -142,6 +163,7 @@ const AddUserComponent = (props) => {
           value={data.procedureDescription}
           onChange={onChange}
         />
+        <p className='errormsg'>{descriptionerror}</p>
         <label>Lab Type</label>
         <ReactHTMLDatalist
           name="labType"
@@ -150,7 +172,7 @@ const AddUserComponent = (props) => {
           options={options}
           value={data.labType}
         />
-
+<p className='errormsg'>{laberror}</p>
         <label>Procedure Name</label>
         <ReactHTMLDatalist
           name="experimentName"
@@ -158,6 +180,7 @@ const AddUserComponent = (props) => {
           options={options1}
           value={data.experimentName}
         />
+        <p className='errormsg'>{procedureerror}</p>
         <br/>
         <Button variant="contained" color="primary" onClick={saveUser}>
           Save

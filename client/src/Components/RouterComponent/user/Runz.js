@@ -237,6 +237,9 @@ const Runz = (props) => {
               zIndex:0
             }     
           }}
+          localization={{
+            pagination:{labelRowsSelect:"Runz"}
+          }}
           actions={[
             {
               icon: 'add',
