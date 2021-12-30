@@ -44,6 +44,7 @@ const Context = ({ value, dataV }) => {
   const [result, setResult] = React.useState({});
   const [accodicon, setAccodicon] = React.useState("none");
   const [errorvalue, setErrorvalue]=React.useState();
+  const [output,setOutput]=React.useState({})
 
   let inputEl = document.querySelectorAll("input");
   let inputElArr = Array.from(inputEl).slice(1);
@@ -54,7 +55,7 @@ const Context = ({ value, dataV }) => {
   function init() {
     
     inputElArr.forEach((ele) => {
-      console.log("whole", ele.name)
+      // console.log("whole", ele.name)
       const { name, value } = ele;
       setData((prev) => ({ ...prev, [name]: value ?? "1" }));
       ele.onChange = (e) => {
@@ -96,25 +97,29 @@ const Context = ({ value, dataV }) => {
   React.useEffect(init, [isData]);
 
 
-
-const accod=()=>{
-  if (!errorvalue){
-  axios.get(`${ApiUrl}/runPython`).then((res) => {
-    setResult(res.data);
-  })
+ const accod=()=>{
+  setErrorvalue()
+  fetch(`${ApiUrl}/runPython`)
+  .then(res => res.json())
+  .then((data)=> setOutput(data))
+  console.log(output)
+  // console.log(output.Result[0])
+  if (output.Result){
+    setResult(output);
   }
+  else{
+    setErrorvalue("Make sure you have entered correct value")
   }
+   }
 
 
 
   const Calculate = (event) => {
     event.preventDefault();
     init()
+    setErrorvalue()
     let vals = Object.values(data)
-    console.log("check data entry",data)
-    console.log("check vals entry",vals)
     const empty = vals.filter(item => item  === "");
-    console.log("total data",vals.length,"empty data",empty.length,"filled data", (vals.length-empty.length))
     setAccodicon("block")
     if (empty.length > 0){
       setErrorvalue("Must fill all input Field")
@@ -122,19 +127,20 @@ const accod=()=>{
     else if(empty.length === 0){
       setErrorvalue()
     }
-
     // console.log("check data entry",data)
-    // fetch(`${ApiUrl}/runPython/`, {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     ...data,
-    //     title: `${dataV && dataV?.experimentName}`,
-    //   }),
-    //   headers: { "Content-Type": "application/json" },
-    // }).then(function (response) {
-    //   return response.json();
-    // });
-    // setIsData((prev) => !prev);
+    fetch(`${ApiUrl}/runPython/`, {
+      method: "POST",
+      body: JSON.stringify({
+        ...data,
+        title: `${dataV && dataV?.experimentName}`,
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+    setIsData((prev) => !prev);
+ 
   }
 
 
@@ -222,6 +228,7 @@ const accod=()=>{
                     );
                   });
                 })
+                // <p>{output}</p>
               }
               </Typography>
             </AccordionDetails>

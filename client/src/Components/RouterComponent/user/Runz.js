@@ -25,6 +25,7 @@ import MaterialTable from 'material-table';
 
 
 import {FaRegEdit} from 'react-icons/fa';
+import Loading from "./Lodaing"
 
 
 function Alert(props) {
@@ -98,6 +99,7 @@ const Runz = (props) => {
   const [message, setMessage] = useState(null);
   const [modalOpenAdd, setModalOpenAdd] = useState(false);
   const [modalOpenEdit, setModalOpenEdit] = useState(false);
+  const [loadingscreen, setLoadingscreen]=useState(true)
   const columns1 = [
     { title: "ID", field: "id" },
     { title: "Procedure Name", field: "ProcedureName"  },
@@ -135,7 +137,7 @@ const Runz = (props) => {
   const value = async () => {
     const usersdum = await ApiService.fetchUsers().then((res) => res);
     console.log("asdsaddsadafdwfsfas", usersdum);
-
+    setLoadingscreen(false)
     setUsers(() => usersdum.data.data);
   };
 
@@ -211,6 +213,7 @@ const Runz = (props) => {
         <EditUserComponent closeModale={closeModale} />
       </Modal>
       <div style={{ maxWidth: '100%' }}>
+        {loadingscreen ?<Loading/>:
         <MaterialTable
           columns={columns1}
           data={rows}
@@ -251,7 +254,7 @@ const Runz = (props) => {
 
      
         />
-        {console.log(rows)}
+        }
       </div>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">

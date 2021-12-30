@@ -9,6 +9,7 @@ import { actionTypes } from "../../../data/reducer"
 import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import MaterialTable from 'material-table';
+import Loading from "./Lodaing"
 
 import ApiUrl from "../../../ServerApi"
 function Alert(props) {
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const Procedurelist = (props) => {
   const [dat, setDat] = useState(null);
   const classes = useStyles();
+  const [loadingscreen, setLoadingscreen]=useState(true)
   
   const [{prosid}, dispatch] = useStateValue();
   const columns1 = [
@@ -44,7 +46,10 @@ const Procedurelist = (props) => {
 
     fetch(`${ApiUrl}/moreInfo`)
      .then(data=>data.json())
-     .then(data=>setDat(data.data))
+     .then(data=>{
+       setDat(data.data)
+       setLoadingscreen(false)
+      })
  
   }, []);
 
@@ -57,6 +62,7 @@ const Procedurelist = (props) => {
    // window.localStorage.clear();
     axios.get(`${ApiUrl}/moreInfo/${id}`).then((res) => {
       window.localStorage.setItem("proceId", res.data.id);
+     
     });
     dispatch({
       type: actionTypes.SET_PROSID,
@@ -71,8 +77,9 @@ const Procedurelist = (props) => {
 
 
 
-{dat?
+
       <div style={{ maxWidth: '100%' }}>
+        {loadingscreen ? <Loading/> :
         <MaterialTable
          
         
@@ -95,9 +102,9 @@ const Procedurelist = (props) => {
           ]}
 
         />
-        {/* {console.log(dat)} */}
+       }
       </div>
-:null}      
+     
     </div>
   );
 };
