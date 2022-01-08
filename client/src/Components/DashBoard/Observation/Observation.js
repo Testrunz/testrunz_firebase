@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import Context from "../Context";
-import Graph from "../Graph/Graph";
+// import Graph from "../Graph/Graph";
 import ApiUrl from "../../../ServerApi";
 const useStyles = makeStyles({
   root: {
@@ -13,15 +13,15 @@ const useStyles = makeStyles({
 });
 
 const Observation = ({ data }) => {
-  let graph;
-  if (
-    data.experimentName === "Lee's Disc Method" ||
-    data.experimentName === "Polarimeter"
-  ) {
-    graph = true;
-  } else {
-    graph = false;
-  }
+  // let graph;
+  // if (
+  //   data.experimentName === "Lee's Disc Method" ||
+  //   data.experimentName === "Polarimeter"
+  // ) {
+  //   graph = true;
+  // } else {
+  //   graph = false;
+  // }
   const classes = useStyles();
   const [htmlContext, setHtmlContext] = React.useState(null);
   //console.log({ ...data });
@@ -32,6 +32,7 @@ const Observation = ({ data }) => {
         setHtmlContext((prev) => {
           if (prev === null) return res.data;
         });
+       
       });
   }, [data.experimentName]);
   
@@ -44,9 +45,9 @@ const Observation = ({ data }) => {
             <Context value={htmlContext} dataV={data} />
           </div>
         </Grid>
-        <Grid item xs={5}>
+        {/* <Grid item xs={5}>
           <div className={classes.paper}>{graph && <Graph data={data} />}</div>
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );

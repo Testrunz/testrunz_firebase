@@ -211,10 +211,11 @@ const Context = ({ value, dataV }) => {
          <div >
           <div className="containeer">
             <form >
-              {value?.html &&
+                {
                 uses.map((el) =>
                   parse(value?.html && html2json.json2html(el))
-                )}
+                )} 
+               
               <Button variant="contained"
                 style={{ position: "relative", left: "40%", top: "2%" }}
                 onClick={Calculate}

@@ -35,6 +35,7 @@ const Record = ({ data }) => {
         });
       });
   }, [data.experimentName]);
+  
   return (
     <>
       <Grid container className={classes.root} spacing={2}>

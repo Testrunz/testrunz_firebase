@@ -42,7 +42,7 @@ const OuterNav = () => {
     };
     const handleClose = () => {
       setAnchorEl(null);
-      history.push('/')
+      return (window.location.href = "/");
     };
    
     const [{user}, dispatch] = useStateValue();

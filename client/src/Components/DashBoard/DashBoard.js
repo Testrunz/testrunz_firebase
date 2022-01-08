@@ -9,7 +9,7 @@ import { deepOrange, deepPurple } from "@material-ui/core/colors";
 import ApiService from "../../Sevices/ApiService";
 import ApiUrl from "../../ServerApi";
 import DispBoard from "./DispBoard";
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -78,7 +78,7 @@ const DashBoard = (props) => {
 
   return (
     <div className={classes.root}>
-      <button
+      {/* <button
         title="Exit"
         onClick={goBack}
         style={{
@@ -86,14 +86,27 @@ const DashBoard = (props) => {
           background: "none",
           zIndex: 100000,
           position: "absolute",
-          top: 10,
-          right: 10,
+          top: 20,
+          right: 20,
+          color:"white"
         }}
       >
-        <Avatar className={classes.purple}>
-          {`${data.studentName}`.substring(0, 2)}
-        </Avatar>
-      </button>
+       Back<ArrowBackIosIcon/>
+      </button> */}
+        <ArrowBackIcon
+        onClick={goBack}
+        style={{
+          color: "red",
+          border: "1px solid black",
+          borderRadius: "50%",
+          background: "white",
+          zIndex: 100000,
+          position: "absolute",
+          top: 10,
+          right: 30,
+        }}
+      />
+
       <DispBoard data={data} />
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">

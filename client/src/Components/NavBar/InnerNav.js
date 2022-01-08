@@ -15,16 +15,21 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useHistory, Link } from "react-router-dom";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
+import Avatar from '@mui/material/Avatar';
+
 
 
 
 const useStyles = makeStyles({
-    logout: {
-        paddingRight:"75px",
-        '&:hover': {
-            cursor: 'pointer'
-          }
-    }, 
+    // logout: {
+    //     marginRight:"205px",
+    //     '&:hover': {
+    //         cursor: 'pointer'
+    //       },
+    //       color:"white"
+    // }, 
     pointer: {
 
         '&:hover': {
@@ -41,24 +46,56 @@ const InnerNav = () => {
 
     const [{user}, dispatch] = useStateValue();
     const history = useHistory()
-    
+    const [anchorEl, setAnchorEl] = React.useState(null);
+const [randomColor, setRandomColor] = React.useState();
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
     const runz = () => {
       window.localStorage.clear();
-      
+      setAnchorEl(null);
      return (window.location.href = "/");
     }
     const home = () => {
+      window.localStorage.removeItem("userId");
      return (window.location.href = "/#/app");  
     }
 
-    
+    useEffect(() => {
+   
+      setRandomColor('#'+Math.floor(Math.random()*16777215).toString(16)) // # added
+      console.log(randomColor)
+    }, [])
 
     return (
         <div>
             <AppBar position="static" style={{ width: "100%" }}>
                 <Toolbar>
                     <Typography onClick={home} className={classes.pointer} sx={{ flexGrow: 1 }} variant="h6" component="div" >TESTRUNZ </Typography>
-                    <Typography onClick={runz} className={classes.logout} variant="h6" component="div">logout</Typography>
+                  
+                    <Avatar  size="small"  style={{backgroundColor:randomColor,marginRight:"70px"}} className={classes.logout} onClick={handleClick}>
+                    {`${user.name}`.substring(0, 2)}
+</Avatar>
+
+
+      {/* <button className={classes.logout} style={{color:"white"}} onClick={handleClick}>hello</button> */}
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={runz}>Logout</MenuItem>
+      </Menu>
+
+                 
+            
                 </Toolbar>
             </AppBar>
 

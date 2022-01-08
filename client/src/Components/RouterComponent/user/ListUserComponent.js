@@ -106,6 +106,7 @@ const ListUserComponent = (props) => {
         <Tab label="Procedure" {...a11yProps(1)} />
         <Tab label="User" {...a11yProps(2)} />
         <Tab label="Setup" {...a11yProps(3)} />
+
       </Tabs>
       <TabPanel value={value} index={0} >
         <Runz {...props} />
@@ -120,6 +121,7 @@ const ListUserComponent = (props) => {
         <Setup {...props} />
         <Deleteaccount/>
       </TabPanel>
+ 
      
      
     </div>

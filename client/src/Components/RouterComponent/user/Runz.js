@@ -69,7 +69,7 @@ const customStyles = {
     top: "50%",
     left: "50%",
     width: "50%",
-    height: "50%",
+    height: "55%",
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
@@ -107,7 +107,7 @@ const Runz = (props) => {
     // { title: "Experiment Name", field: "ExperimentName" },
      { title: "Lab Name", field: "labname" },
     { title: "Procedure ID    ", field: "ProcedureId" ,sorting:false },
-
+    { title: "Description", field: "description" },
   ];
 
   const [page, setPage] = React.useState(0);
@@ -146,7 +146,7 @@ const Runz = (props) => {
     console.log(user);
   }, [modalOpenAdd, modalOpenEdit]);
 
-  //
+  
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -177,17 +177,17 @@ const Runz = (props) => {
     window.localStorage.setItem("userId", id);
     props.history.push(`/userdash/${id}`);
   };
-
-  users.map((userr, ident) => {
-    if (userr.userid == user._id)
-    
+  let individuals = users.filter(function (userr) {return userr.userid == user._id;}).reverse();
+individuals.map((userr, ident) => {
+   
       return rows.push({
-        id: ident,
+        id: ident+1,
         ProcedureName: userr.experimentName,
         // TemplateId: userr.runID.slice(userr.runID.length - 12),
         // ExperimentName: userr.experimentName,
         labname:userr.labType,
         ProcedureId: userr._id,
+        description:userr.procedureDescription,
 
       });
 
@@ -198,13 +198,14 @@ const Runz = (props) => {
     
       <Modal
         isOpen={modalOpenAdd}
-        onRequestClose={closeModal}
         appElement={document.getElementById('root')}
         style={customStyles}
-        contentLabel="Example Modal"
-        backdropClick={openModal}
+        contentLabel="add runz Modal"
+        disableBackdropClick="true"
+        sx={{ overflow: 'hidden' }}
+        
       >
-        <AddUserComponent closeModal={closeModal} onBackdropClick="false" />
+        <AddUserComponent closeModal={closeModal} />
       </Modal>
 
       <Modal
