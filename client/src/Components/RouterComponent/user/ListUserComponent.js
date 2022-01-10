@@ -15,6 +15,7 @@ import Setup from "./Setup";
 
 import { actionTypes } from '../../../data/reducer';
 import { useStateValue } from '../../../data/StateProvider';
+import Deleteaccount from "./Deleteaccount";
 
 
 function TabPanel(props) {
@@ -117,6 +118,7 @@ const ListUserComponent = (props) => {
       </TabPanel>
       <TabPanel value={value} index={3}>
         <Setup {...props} />
+        <Deleteaccount/>
       </TabPanel>
      
      

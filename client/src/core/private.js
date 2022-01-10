@@ -47,64 +47,29 @@ const Private = (props) => {
 
 
   useEffect(()=>{
-   loadProfile()
   
+   set_id(user)
+   loadProfile()
+  if(JSON.parse(localStorage.getItem('userdetail')).showOnce===true){
+    props.history.push("/app");
+   }
   },[])
-
+  
 
   const loadProfile = () => {
  let idval = JSON.parse(localStorage.getItem('userdetail'))._id
-   
-    axios({
-      method: "GET",
-      url: `${process.env.REACT_APP_API}/users/${idval}`,
+ console.log("helloo id",idval)
+ 
+ fetch(`${process.env.REACT_APP_API}/users/${idval}`)
+    .then(response => response.json())
+    .then(data => console.log("helloo eiwfklwejfklsd",data))
+    .catch((error) => {
+      console.error('Error:ererere', error);
+    });
 
-    })
-      .then((response) => {
-        const {
-          designation,
-          collegeName,
-          department,
-          country,
-          state,
-          year,
-          semester,
-          showOnce,
-        } = response.data;
-        
-          setDesignation(designation)
-          setCollegeName(collegeName)
-          setDepartment(department)
-          setCountry(country)
-          setState(state)
-          setYear(year)
-          setSemester(semester)
-          setShowOnce(showOnce)
-        
-      })
-      .catch((err) => {
-        console.log("recived error",err.response.data.error);
-  
-        if (err.response.status === 401) {
-
-          window.localStorage.clear();
-          props.history.push("/");
-
-        }
-      });
-    set_id(idval)
    };
 
-  // const {
-  //   designation,
-  //   collegeName,
-  //   department,
-  //   country,
-  //   state,
-  //   year,
-  //   semester,
-  //   btnText,
-  // } = credit;
+ 
 
  
 
@@ -324,3 +289,4 @@ return (
 };
 
 export default Private;
+

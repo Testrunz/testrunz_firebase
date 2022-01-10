@@ -16,6 +16,8 @@ import { BsFillCalculatorFill } from 'react-icons/bs';
 import "./layout.css"
 import ApiUrl from "../../ServerApi";
 import Swal from 'sweetalert2'
+import { GridLoadingOverlay } from "@material-ui/data-grid";
+import Lodaing from "../RouterComponent/user/Lodaing";
 // import { stableValueHash } from "react-query/types/core/utils";
 
 
@@ -42,9 +44,10 @@ const Context = ({ value, dataV }) => {
   const [data1, setData1] = React.useState({});
   const [isData, setIsData] = React.useState(false);
   const [result, setResult] = React.useState({});
-  const [accodicon, setAccodicon] = React.useState("none");
   const [errorvalue, setErrorvalue]=React.useState();
   const [output,setOutput]=React.useState({})
+  const [accord, setAccord] = React.useState(false);
+  
 
   let inputEl = document.querySelectorAll("input");
   let inputElArr = Array.from(inputEl).slice(1);
@@ -53,9 +56,8 @@ const Context = ({ value, dataV }) => {
 
 
   function init() {
-    
+    console.log(inputEl)
     inputElArr.forEach((ele) => {
-      // console.log("whole", ele.name)
       const { name, value } = ele;
       setData((prev) => ({ ...prev, [name]: value ?? "1" }));
       ele.onChange = (e) => {
@@ -68,9 +70,6 @@ const Context = ({ value, dataV }) => {
   const retrive = async(event) => {
     event.preventDefault();
     let expid =  localStorage.getItem("userId")
-    // const res = await fetch(`${ApiUrl}/experiments/${window.location.href.split("/")[5]}`);
-    // const ress =await res.json()
-  
     fetch(`${ApiUrl}/experiments/${expid}`)
     .then((res)=>res.json())
     .then(data =>{
@@ -95,39 +94,40 @@ const Context = ({ value, dataV }) => {
    
   }
   React.useEffect(init, [isData]);
-
-
- const accod=()=>{
-  setErrorvalue()
-  fetch(`${ApiUrl}/runPython`)
-  .then(res => res.json())
-  .then((data)=> setOutput(data))
-  console.log(output)
-  // console.log(output.Result[0])
-  if (output.Result){
-    setResult(output);
+ 
+  const accordchange=()=>{
+    setAccord(!accord)
   }
-  else{
-    setErrorvalue("Make sure you have entered correct value")
-  }
-   }
-
 
 
   const Calculate = (event) => {
     event.preventDefault();
+    setAccord(true)
     init()
-    setErrorvalue()
+
     let vals = Object.values(data)
+   
     const empty = vals.filter(item => item  === "");
-    setAccodicon("block")
+    const tosent  = delete data[""]
+    console.log("data",data)
+
     if (empty.length > 0){
-      setErrorvalue("Must fill all input Field")
+      setErrorvalue("Must fill all Required Readings")
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Must fill all Required Readings',
+        footer:"Values Missing",
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
     else if(empty.length === 0){
       setErrorvalue()
-    }
-    // console.log("check data entry",data)
+      setResult({})
+      let resultval ={}
+    
+   
     fetch(`${ApiUrl}/runPython/`, {
       method: "POST",
       body: JSON.stringify({
@@ -135,12 +135,34 @@ const Context = ({ value, dataV }) => {
         title: `${dataV && dataV?.experimentName}`,
       }),
       headers: { "Content-Type": "application/json" },
+    }).then((responce)=>responce.json())
+    .then((data)=>{
+     setResult( data)
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Calculation Completed',
+        showConfirmButton: false,
+        timer: 1500
+      })
     })
     .catch((error) => {
-      console.error('Error:', error);
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Check the values you have Entered',
+        footer:"calculation Error",
+        showConfirmButton: false,
+        timer: 1500
+      })
+      setErrorvalue("Check the values you have Entered")
     });
-    setIsData((prev) => !prev);
- 
+  
+  //   setIsData((prev) => !prev);
+  // if(resultval){
+  //   setResult(resultval)
+  // }
+  }
   }
 
 
@@ -169,7 +191,6 @@ const Context = ({ value, dataV }) => {
           position: 'center',
           icon: 'error',
           title: 'something went wrong Try again',
-          footer: error,
           showConfirmButton: false,
           timer: 1500
         })
@@ -184,18 +205,19 @@ const Context = ({ value, dataV }) => {
 
   return (
     <div className={classes.root}>
+   
 
-      
-        <div >
+      {value? 
+         <div >
           <div className="containeer">
-            <form onSubmit={Calculate}>
+            <form >
               {value?.html &&
                 uses.map((el) =>
                   parse(value?.html && html2json.json2html(el))
                 )}
               <Button variant="contained"
                 style={{ position: "relative", left: "40%", top: "2%" }}
-                type="submit"
+                onClick={Calculate}
               >
                 Calculate Result &nbsp;&nbsp;&nbsp;
                 <BsFillCalculatorFill/>
@@ -204,19 +226,19 @@ const Context = ({ value, dataV }) => {
           </div>
           <br /><br />
          
-          <Accordion>
+          <Accordion  expanded={accord}>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon onClick={accod} style={{display:accodicon}}/>}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-             
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"    
+            onClick={accordchange}         
             >
               <Typography className={classes.heading}>Result</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
                 <p>Result will be shown here</p>
-                {errorvalue? <p>{errorvalue}</p>:
+                {errorvalue? <p style={{color:"red"}}>*{errorvalue}*</p>:
                 Object.keys(result).map((item) => {
                   return Object.keys(result[item][0]).map((i) => {
                     return (
@@ -240,11 +262,11 @@ const Context = ({ value, dataV }) => {
       <Button variant="contained" onClick={updateval}>Save &nbsp;&nbsp;&nbsp;<ImCloudUpload/></Button>
      
     </Stack>
-          {/* <button onClick={retrive}>retrive</button>
-          <button onClick={updateval}>update</button> */}
+
          
           <hr />
-        </div>
+        </div> 
+        :<Lodaing/>}
      
     </div>
   );

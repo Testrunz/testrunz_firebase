@@ -143,6 +143,7 @@ const Runz = (props) => {
 
   useEffect(() => {
     value();
+    console.log(user);
   }, [modalOpenAdd, modalOpenEdit]);
 
   //
@@ -198,10 +199,12 @@ const Runz = (props) => {
       <Modal
         isOpen={modalOpenAdd}
         onRequestClose={closeModal}
+        appElement={document.getElementById('root')}
         style={customStyles}
         contentLabel="Example Modal"
+        backdropClick={openModal}
       >
-        <AddUserComponent closeModal={closeModal} />
+        <AddUserComponent closeModal={closeModal} onBackdropClick="false" />
       </Modal>
 
       <Modal
@@ -236,7 +239,7 @@ const Runz = (props) => {
 
           }}
           options={{
-            actionsColumnIndex: -1, grouping:true,  pageSizeOptions:[2,5,10],pageSize:5,headerStyle: {
+            actionsColumnIndex: -1, grouping:true,  pageSizeOptions:[5,10,15],pageSize:10,headerStyle: {
               zIndex:0
             }     
           }}

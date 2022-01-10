@@ -23,6 +23,8 @@ class ApiService {
   editUser(user) {
     return axios.patch(USER_API_BASE_URL + "/" + user._id, user);
   }
+
+
 }
 
 export default new ApiService();

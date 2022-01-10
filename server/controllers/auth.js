@@ -1,4 +1,5 @@
 const User = require("../models/Users");
+const Experiment = require("../models/Experiments");
 const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const expressJWT = require("express-jwt");
@@ -87,10 +88,7 @@ const googleLogin = (req, res, next) => {
                 });
               })
             }
-
-
-
-            else {
+          else {
               const { _id, email, name, role, designation } = user;
               res.json({
                 user: { _id, email, name, role, designation },
@@ -100,6 +98,25 @@ const googleLogin = (req, res, next) => {
         
 };
 
+const deleteuser=(req, res, next)=>{
+  const userid  = req.body.userid;
+  console.log(userid)
+  Experiment.deleteMany({userid:userid})
+  .then(()=>{
+    console.log("experiments Deleted")
+    User.deleteMany({_id:userid})
+    .then((user)=>{
+      console.log("user deleted")
+      res.json({
+        detail: "user Deleted",
+      });
+      });
+    });
+
+    
+  
+}
+
 
 
 module.exports = {
@@ -107,5 +124,5 @@ module.exports = {
   authAccountlogin,
   adminMiddleware,
   googleLogin,
-
+  deleteuser
 };
