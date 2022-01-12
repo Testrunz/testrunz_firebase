@@ -10,7 +10,7 @@ import Userprofile from './Userprofile';
 import Activity from './Activity';
 
 import AccessManagement from './AccessManagement';
-
+import NotificationSettings from './NotificationSettings'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -68,17 +68,21 @@ export default function SimpleTabs() {
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example"  >
           <Tab label="Profile"  {...a11yProps(0)} style={{width:"200px"}} />
           <Tab label="Activity"  {...a11yProps(1)} style={{width:"200px"}}/>
-          <Tab label="AccessManagement" {...a11yProps(2)} style={{width:"200px"}}/>
+          <Tab label="Access Management" {...a11yProps(2)} style={{width:"200px"}}/>
+          <Tab label="Notification Settings" {...a11yProps(3)} style={{width:"200px"}}/>
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Userprofile/>
+      <Userprofile/>
       </TabPanel>
       <TabPanel value={value} index={1}>
       <Activity />
       </TabPanel>
       <TabPanel value={value} index={2}>
       <AccessManagement />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+      <NotificationSettings />
       </TabPanel>
     </div>
   );

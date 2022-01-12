@@ -1,7 +1,7 @@
 import React from 'react'
 import "./loading.css"
 
-const Lodaing = () => {
+const Loading = () => {
     return (
         <div id="header">
       <h1>Loading ....</h1>
@@ -16,4 +16,4 @@ const Lodaing = () => {
     )
 }
 
-export default Lodaing
+export default Loading

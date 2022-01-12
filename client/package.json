@@ -63,11 +63,11 @@
     "web-vitals": "^2.0.1"
   },
   "scripts": {
-    "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && craco start",
-    "start:dev": "export SET NODE_OPTIONS=--openssl-legacy-provider && nodemon app.js",
-    "build": "export SET NODE_OPTIONS=--openssl-legacy-provider && craco build",
-    "test": "craco test",
-    "eject": "craco eject"
+    "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "build": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+    "test": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts test",
+    "eject": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts eject",
+    "start:dev": "export SET NODE_OPTIONS=--openssl-legacy-provider && nodemon app.js"
   },
   "eslintConfig": {
     "extends": [

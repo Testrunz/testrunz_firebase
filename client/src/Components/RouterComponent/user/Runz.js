@@ -25,7 +25,7 @@ import MaterialTable from 'material-table';
 
 
 import {FaRegEdit} from 'react-icons/fa';
-import Loading from "./Lodaing"
+import Loading from "./Loading"
 
 
 function Alert(props) {

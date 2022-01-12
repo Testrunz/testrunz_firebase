@@ -9,7 +9,7 @@ import { actionTypes } from "../../../data/reducer"
 import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import MaterialTable from 'material-table';
-import Loading from "./Lodaing"
+import Loading from "./Loading"
 
 import ApiUrl from "../../../ServerApi"
 function Alert(props) {

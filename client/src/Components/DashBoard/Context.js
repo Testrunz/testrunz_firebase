@@ -17,7 +17,7 @@ import "./layout.css"
 import ApiUrl from "../../ServerApi";
 import Swal from 'sweetalert2'
 import { GridLoadingOverlay } from "@material-ui/data-grid";
-import Lodaing from "../RouterComponent/user/Lodaing";
+import Loading from "../RouterComponent/user/Loading";
 // import { stableValueHash } from "react-query/types/core/utils";
 
 
@@ -266,7 +266,7 @@ const Context = ({ value, dataV }) => {
          
           <hr />
         </div> 
-        :<Lodaing/>}
+        :<Loading/>}
      
     </div>
   );

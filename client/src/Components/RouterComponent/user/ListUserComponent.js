@@ -13,6 +13,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 import Runz from "./Runz";
 import Procedure from "./ProcedureList";
+import Inventories from "./Inventories"
 import User from "./User";
 import Setup from "./Setup";
 
@@ -106,13 +107,13 @@ const ListUserComponent = (props) => {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-       
-        <Tab icon={<PlayCircleOutlineIcon />} label="Runz" {...a11yProps(0)} />
-        <Tab icon={<BorderColorIcon />}label="Procedure" {...a11yProps(1)} />
-        <Tab icon={<InventoryIcon />} label="Invetory" />
-        <Tab icon={<SettingsIcon />} label="Setup" {...a11yProps(3)} />
+        <Tab icon={<PlayCircleOutlineIcon />} label="Runz" />
+        <Tab icon={<BorderColorIcon />}label="Procedures" />
+        <Tab icon={<InventoryIcon />} label="Inventories" />
+        {/* put break here */}
+        <Tab icon={<SettingsIcon />} label="Setup" />
         <Tab icon={<ContactSupportIcon />}label="Support" />
-        <Tab icon={<PermIdentityIcon/>}label="Profile" {...a11yProps(2)} />
+        <Tab icon={<PermIdentityIcon/>}label="Profile" />
       </Tabs>
       <TabPanel value={value} index={0} >
         <Runz {...props} />
@@ -121,14 +122,17 @@ const ListUserComponent = (props) => {
         <Procedure {...props} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <User {...props} />
+        <Inventories {...props} />
       </TabPanel>
-      <TabPanel value={value} index={3}>
+      <TabPanel value={value} index={5}>
         <Setup {...props} />
-        <Deleteaccount/>
       </TabPanel>
-     
-     
+      <TabPanel value={value} index={4}>
+       <Setup {...props} />
+      </TabPanel>
+      <TabPanel value={value} index={5}>
+       <User {...props} />
+      </TabPanel>
     </div>
   );
 };
