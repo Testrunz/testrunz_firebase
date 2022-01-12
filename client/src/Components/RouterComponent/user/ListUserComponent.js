@@ -14,8 +14,10 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Runz from "./Runz";
 import Procedure from "./ProcedureList";
 import Inventories from "./Inventories"
-import User from "./User";
 import Setup from "./Setup";
+import UserSettings from "./UserSettings"
+import Support from "./Support"
+import User from "./User";
 
 
 
@@ -111,7 +113,7 @@ const ListUserComponent = (props) => {
         <Tab icon={<BorderColorIcon />}label="Procedures" />
         <Tab icon={<InventoryIcon />} label="Inventories" />
         {/* put break here */}
-        <Tab icon={<SettingsIcon />} label="Setup" />
+        <Tab icon={<SettingsIcon />} label="Settings" />
         <Tab icon={<ContactSupportIcon />}label="Support" />
         <Tab icon={<PermIdentityIcon/>}label="Profile" />
       </Tabs>
@@ -124,11 +126,11 @@ const ListUserComponent = (props) => {
       <TabPanel value={value} index={2}>
         <Inventories {...props} />
       </TabPanel>
-      <TabPanel value={value} index={5}>
-        <Setup {...props} />
+      <TabPanel value={value} index={3}>
+        <UserSettings {...props} />
       </TabPanel>
       <TabPanel value={value} index={4}>
-       <Setup {...props} />
+       <Support {...props} />
       </TabPanel>
       <TabPanel value={value} index={5}>
        <User {...props} />

@@ -57,9 +57,10 @@ export default function SimpleTabs() {
         
         <AppBar position="static" >
           <Tabs value={value} onChange={handleChange} aria-label="simple tabs example"  >
-            <Tab label="Help Guide" style={{width:"20%"}} />
-            <Tab label="Release Notes" style={{width:"20%"}}/>
-            <Tab label="Feedback"  style={{width:"20%"}}/>
+            <Tab label="Manage App" style={{width:"20%"}} />
+            <Tab label="Access Control" style={{width:"20%"}}/>
+            <Tab label="Custom Fields"  style={{width:"20%"}}/>
+            <Tab label="Custom Columns" style={{width:"20%"}}/>
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>

@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    width:"600px"
+    width:"80vw"
   },
 }));
 
@@ -66,10 +66,10 @@ export default function SimpleTabs() {
       
       <AppBar position="static" >
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example"  >
-          <Tab label="Profile"  {...a11yProps(0)} style={{width:"200px"}} />
-          <Tab label="Activity"  {...a11yProps(1)} style={{width:"200px"}}/>
-          <Tab label="Access Management" {...a11yProps(2)} style={{width:"200px"}}/>
-          <Tab label="Notification Settings" {...a11yProps(3)} style={{width:"200px"}}/>
+          <Tab label="Profile"  {...a11yProps(0)} style={{width:"20%"}} />
+          <Tab label="Activity"  {...a11yProps(1)} style={{width:"20%"}}/>
+          <Tab label="Access Management" {...a11yProps(2)} style={{width:"20%"}}/>
+          <Tab label="Notification Settings" style={{width:"20%"}}/>
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
