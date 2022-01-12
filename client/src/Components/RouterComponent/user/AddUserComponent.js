@@ -133,13 +133,11 @@ else{
         <IoIosArrowRoundBack
         onClick={props.closeModal}
         style={{
-          // color: "red",
-          // border: "1px solid black",
-          // borderRadius: "50%",
-          // background: "white",
+          color: "red",
+          border: "1px solid black",
+          borderRadius: "50%",
+          background: "white",
           alignItems:"center"
-        
-         
         }}
       />
       </Typography>

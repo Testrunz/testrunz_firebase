@@ -4,7 +4,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
-
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import Runz from "./Runz";
 import Procedure from "./ProcedureList";
@@ -102,10 +107,12 @@ const ListUserComponent = (props) => {
         className={classes.tabs}
       >
        
-        <Tab label="Runz" {...a11yProps(0)} />
-        <Tab label="Procedure" {...a11yProps(1)} />
-        <Tab label="User" {...a11yProps(2)} />
-        <Tab label="Setup" {...a11yProps(3)} />
+        <Tab icon={<PlayCircleOutlineIcon />} label="Runz" {...a11yProps(0)} />
+        <Tab icon={<BorderColorIcon />}label="Procedure" {...a11yProps(1)} />
+        <Tab icon={<InventoryIcon />} label="Invetory" />
+        <Tab icon={<SettingsIcon />} label="Setup" {...a11yProps(3)} />
+        <Tab icon={<ContactSupportIcon />}label="Support" />
+        <Tab icon={<PermIdentityIcon/>}label="Profile" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={value} index={0} >
         <Runz {...props} />
