@@ -63,9 +63,9 @@
     "web-vitals": "^2.0.1"
   },
   "scripts": {
-    "start": "craco start",
-    "start:dev": "nodemon app.js",
-    "build": "craco build",
+    "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && craco start",
+    "start:dev": "export SET NODE_OPTIONS=--openssl-legacy-provider && nodemon app.js",
+    "build": "export SET NODE_OPTIONS=--openssl-legacy-provider && craco build",
     "test": "craco test",
     "eject": "craco eject"
   },

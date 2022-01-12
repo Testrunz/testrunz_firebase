@@ -16,5 +16,5 @@ RUN apk -U upgrade
 RUN npm install --force
 
 EXPOSE 3000
-
+CMD ["npm", "run", "build"] # required for creating index.html
 CMD ["npm", "run", "start:dev"]

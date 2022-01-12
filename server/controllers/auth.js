@@ -52,7 +52,7 @@ const adminMiddleware = (req, res, next) => {
       if (!user)
         return res
           .status(400)
-          .json({ error: "User with this email does'nt exits" });
+          .json({ error: "User with this email doesn't exits" });
       if (user.role !== "admin") {
         return res.status(400).json({ error: "Admin resource access denied" });
       }

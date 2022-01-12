@@ -1,1 +1,9 @@
 node_modules
+client/build/*
+
+client/terraform/.terraform.lock.hcl
+client/terraform/.terraform/terraform.tfstate
+client/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/3.70.0/linux_amd64/terraform-provider-aws_v3.70.0_x5
+client/terraform/secrets.tfvars
+terraform/.terraform.lock.hcl
+terraform/secrets.tfvars

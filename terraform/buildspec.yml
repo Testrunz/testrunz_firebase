@@ -1,0 +1,44 @@
+version: 0.2
+
+# Production Secrets
+env:
+  secrets-manager:
+    GITHUB_SOURCE_REPO: codebuild-tf-secrets:github_source_repo
+    GITHUB_PROJECT_NAME: codebuild-tf-secrets:github_project_name
+    GITHUB_ACCESS_TOKEN: codebuild-tf-secrets:github_access_token
+    BUCKET_NAME: codebuild-tf-secrets:bucket_name
+    AWS_ACCESS_KEY: codebuild-tf-secrets:aws_access_key
+    AWS_SECRET: codebuild-tf-secrets:aws_secret
+    AWS_ACCOUNT_NUM: codebuild-tf-secrets:aws_account_num
+    AWS_REGION: codebuild-tf-secrets:aws_region
+    CLIENT_REACT_APP_API : codebuild-tf-secrets:client_react_app_api
+    CLIENT_REACT_APP : codebuild-tf-secrets:client_react_app
+    CLIENT_PORT : codebuild-tf-secrets:client_port
+    CLIENT_SKIP_PREFLIGHT_CHECK : codebuild-tf-secrets:client_skip_preflight_check
+    SERVER_NODE_ENV : codebuild-tf-secrets:server_node_env
+    SERVER_PORT : codebuild-tf-secrets:server_port
+    SERVER_SECRET : codebuild-tf-secrets:server_secret
+    SERVER_CLIENT_URL : codebuild-tf-secrets:server_client_url
+    SERVER_DB_CONNECTION : codebuild-tf-secrets:server_db_connection
+    SERVER_JWT_SECRET : codebuild-tf-secrets:server_jwt_secret
+
+phases:
+  install:
+    on-failure: ABORT
+    commands:
+      - apt-get update && apt-get install -y gnupg software-properties-common curl
+      - curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
+      - apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+      - apt-get update && apt-get install terraform
+      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      - unzip awscliv2.zip > /dev/null
+      - ./aws/install --update
+  pre_build:
+    commands:
+      - terraform version
+      - terraform validate
+      - cd bootstrap-tf
+  build:
+    commands:
+      - terraform init
+      - terraform apply
