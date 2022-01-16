@@ -1,9 +1,9 @@
 terraform {
-  backend "s3" {
-    bucket = "testrunz-terraform-be"       # Explicate, cannot use vars, avoid circular deps
-    key    = "bootstrap/terraform.tfstate" # changing this key will require a state migration
-    region = "us-east-1"
-  }
+  # backend "s3" {
+  #   bucket = "testrunz-terraform-be"       # Explicate, cannot use vars, avoid circular deps
+  #   key    = "bootstrap/terraform.tfstate" # changing this key will require a state migration
+  #   region = "us-east-1"
+  # }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -91,7 +91,7 @@ resource "aws_secretsmanager_secret_version" "codebuild-tf-secrets-ver" {
     server_secret : "",                   // salt
     server_client_url : "",               // ??? 
     server_db_connection : ""             // mongo/documentdb
-    # server_jwt_secret : "" # Currently commented out in code
+    #server_jwt_secret : "" # Currently commented out in code
   })
 }
 
