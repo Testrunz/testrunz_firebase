@@ -2,7 +2,7 @@ import json
 import math
 
 
-class POWELC:
+class PowerElec:
     def __init__(self, arg):
         self.arg = arg
     def Gate_Pulse_Generation(self):

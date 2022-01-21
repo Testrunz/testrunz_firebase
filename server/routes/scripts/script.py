@@ -17,7 +17,7 @@ from CommunicationLab1 import CL1
 from Network import NT
 from CommunicationLab2 import Com2
 from CommunicationLab3 import com3
-from PowerElectronics import PowerEle
+from PowerElec import PowerElec
 #from ElectronicDeviceCircuit import EDC
 from ElectronicCircuit1 import EC
 from ElectronicCircuit2 import EC2
@@ -413,27 +413,27 @@ def main(argv):
                 elif((argument[len(argument) -1] == "FSK")):
                     Com2(argument).FSK()
                 elif((argument[len(argument) -3] == "Gate") and (argument[len(argument) -2] == "Pulse") and (argument[len(argument) -1] == "Generation")):
-                    PowerEle(argument).Gate_Pulse_Generation()
+                    PowerElec(argument).Gate_Pulse_Generation()
                 elif((argument[len(argument) -3] == "CHARACTERISTICS") and (argument[len(argument) -2] == "OF") and (argument[len(argument) -1] == "SCR")):
-                    PowerEle(argument).CHARACTERISTICS_OF_SCR()
+                    PowerElec(argument).CHARACTERISTICS_OF_SCR()
                 elif((argument[len(argument) -3] == "CHARACTERISTICS") and (argument[len(argument) -2] == "OF") and (argument[len(argument) -1] == "TRIAC")):
-                    PowerEle(argument).CHARACTERISTICS_OF_TRIAC()
+                    PowerElec(argument).CHARACTERISTICS_OF_TRIAC()
                 elif((argument[len(argument) -3] == "MOSFET") and (argument[len(argument) -2] == "&") and (argument[len(argument) -1] == "IGBT")):                 
-                    PowerEle(argument).MOSFET_IGBT()
+                    PowerElec(argument).MOSFET_IGBT()
                 elif((argument[len(argument) -2] == "HALF") and (argument[len(argument) -1] == "CONTROLLED")):                  
-                    PowerEle(argument).HALF_CONTROLLED()
+                    PowerElec(argument).HALF_CONTROLLED()
                 elif((argument[len(argument) -2] == "FULLY") and (argument[len(argument) -1] == "CONTROLLED")):                  
-                    PowerEle(argument).FULLY_CONTROLLED()
+                    PowerElec(argument).FULLY_CONTROLLED()
                 elif((argument[len(argument) -3] == "MOSFET") and (argument[len(argument) -2] == "BASED") and (argument[len(argument) -1] == "CHOPPERS")):
-                    PowerEle(argument).MOSFET_BASED_CHOPPERS()
+                    PowerElec(argument).MOSFET_BASED_CHOPPERS()
                 elif((argument[len(argument) -4] == "SINGLE") and (argument[len(argument) -3] == "PHASE") and (argument[len(argument) -2] == "PWM") and (argument[len(argument) -1] == "INVERTER")):
-                    PowerEle(argument).SINGLE_PHASE_PWM_INVERTER()
+                    PowerElec(argument).SINGLE_PHASE_PWM_INVERTER()
                 elif((argument[len(argument) -4] == "THREE") and (argument[len(argument) -3] == "PHASE") and (argument[len(argument) -2] == "PWM") and (argument[len(argument) -1] == "INVERTER")):
-                    PowerEle(argument).THREE_PHASE_PWM_INVERTER()
+                    PowerElec(argument).THREE_PHASE_PWM_INVERTER()
                 elif((argument[len(argument) -3] == "AC") and (argument[len(argument) -2] == "VOLTAGE") and (argument[len(argument) -1] == "CONTROLLER")):
-                    PowerEle(argument).AC_VOLTAGE_CONTROLLER()
+                    PowerElec(argument).AC_VOLTAGE_CONTROLLER()
                 elif((argument[len(argument) -4] == "SWITCHED") and (argument[len(argument) -3] == "MODE") and (argument[len(argument) -2] == "POWER") and (argument[len(argument) -1] == "INVERTER")):
-                    PowerEle(argument).SWITCHED_MODE_POWER_CONVERTER()
+                    PowerElec(argument).SWITCHED_MODE_POWER_CONVERTER()
                 elif((argument[len(argument) -2] == "Specific") and (argument[len(argument) -1] == "Gravity")):                  
                     FirstYGtech(argument).Specific_Gravity()
                 elif((argument[len(argument) -2] == "Grain") and (argument[len(argument) -1] == "size")):                  
