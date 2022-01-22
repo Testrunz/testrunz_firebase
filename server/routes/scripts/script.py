@@ -11,8 +11,8 @@ from BEE import BEE
 from FirstYearCivil import FirstYCivil
 from MaterialAndMetallorgy import MAM
 from Dom import Dom
-#from ManufacturingProcess1 import MP1
-#from ManufacturingProcess2 import MP2
+from ManufacturingProcess1 import MP1
+from ManufacturingProcess2 import MP2
 from CommunicationLab1 import CL1
 from Network import NT
 from CommunicationLab2 import Com2
@@ -27,6 +27,7 @@ from ThermalEngineeringLab1 import TE1
 from FirstYearGeotechnical import FirstYGtech
 from Electronic2 import E2
 from Electronic1 import EL1
+from ElectricElectronic import EE
 def main(argv):
     argument = ''
     usage = 'usage: script.py -f <sometext>'
@@ -224,7 +225,7 @@ def main(argv):
                     MP2(argument).Drilling()
                 elif((argument[len(argument) -3] == "Turning") and (argument[len(argument) -2] == "between") and (argument[len(argument) -1] == "centers")):
                     MP2(argument).Turning()
-                elif((argument[len(argument) -4] == "Multi") and (argument[len(argument) -3] == "start") and (argument[len(argument) -2] == "thread") and (argument[len(argument) -1] == "cutting")):
+                elif((argument[len(argument) -3] == "Start") and (argument[len(argument) -2] == "thread") and (argument[len(argument) -1] == "cut")):
                     MP2(argument).Multi()
                 elif((argument[len(argument) -2] == "Eccentric") and (argument[len(argument) -1] == "turning")):
                     MP2(argument).Eccentric()
@@ -232,7 +233,7 @@ def main(argv):
                     MP2(argument).Study()
                 elif((argument[len(argument) -3] == "Drilling") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "tapping")):
                     MP2(argument).Drilling()
-                elif((argument[len(argument) -4] == "Shaping") and (argument[len(argument) -3] == "and") and (argument[len(argument) -2] == "V-slot") and (argument[len(argument) -1] == "grooving")):
+                elif((argument[len(argument) -2] == "V-SLOT") and (argument[len(argument) -1] == "GROOVING")):
                     MP2(argument).Shaping()
                 elif((argument[len(argument) -2] == "Spline") and (argument[len(argument) -1] == "milling")):
                     MP2(argument).Spline()
@@ -392,9 +393,9 @@ def main(argv):
                     TE1(argument).Pin_Fin()
                 elif((argument[len(argument) -3] == "TIME") and (argument[len(argument) -2] == "DIVISION") and (argument[len(argument) -1] == "MULTIPLEXING")):
                     Com2(argument).TIME_DIVISION_MULTIPLEXING()
-                elif((argument[len(argument) -5] == "Mary") and (argument[len(argument) -4] == "ASK") and (argument[len(argument) -3] == "FSK") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "PSK")):                    
-                    Com2(argument).Mary_ASK_FSK_and_PSK()
-                elif((argument[len(argument) -4] == "BASK") and (argument[len(argument) -3] == "BFSK") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "BPSK")):
+                elif((argument[len(argument) -5] == "M-ary") and (argument[len(argument) -4] == "ASK,") and (argument[len(argument) -3] == "FSK,") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "PSK")):                    
+                    Com2(argument).Mary_ASK_FSK_and_PSK()     
+                elif((argument[len(argument) -4] == "BASK,") and (argument[len(argument) -3] == "BFSK") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "BPSK")):
                     Com2(argument).BASK_BFSK_and_BPSK()
                 elif((argument[len(argument) -2] == "RSA") and (argument[len(argument) -1] == "ALGORITHM")):
                     Com2(argument).RSA_ALGORITHM()
@@ -518,9 +519,10 @@ def main(argv):
                     EM2(argument).Direct_and_Quadrature_axis()
                 elif((argument[len(argument) -3] == "THREE-PHASE") and (argument[len(argument) -2] == "SQUIRREL") and (argument[len(argument) -1] == "CAGE")):                   
                     EM2(argument).Three_phase()
+                elif((argument[len(argument) -1] == "Single_Phase_Transformer")):
+                    EE(argument).single_trf()
                 else:
                     Dummy(argument).dummy()
-
             except ValueError:
                 print(json.dumps({"error":"value added error"}))
             
@@ -528,7 +530,3 @@ def main(argv):
 
 if __name__ == "__main__":
     main(sys.argv[1:])
-
-
-
-
