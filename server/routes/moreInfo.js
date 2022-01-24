@@ -8,7 +8,7 @@ const {
 
 router.post("/", postInfo);
 
-router.patch("/:_id", patchById);
+router.patch("/edit", patchById);
 
 router.get("/:_id", getById);
 

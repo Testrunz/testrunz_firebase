@@ -20,7 +20,8 @@ import { GridLoadingOverlay } from "@material-ui/data-grid";
 import Lodaing from "../RouterComponent/user/Lodaing";
 // import { stableValueHash } from "react-query/types/core/utils";
 
-
+import jsPDF from "jspdf"
+import { SiMicrosoftword } from 'react-icons/si';
 
 
 
@@ -42,7 +43,7 @@ const Context = ({ value, dataV }) => {
   const classes = useStyles();
   const [data, setData] = React.useState({});
   const [data1, setData1] = React.useState({});
-  const [isData, setIsData] = React.useState(false);
+  // const [isData, setIsData] = React.useState(false);
   const [result, setResult] = React.useState({});
   const [errorvalue, setErrorvalue]=React.useState();
   const [output,setOutput]=React.useState({})
@@ -73,28 +74,80 @@ const Context = ({ value, dataV }) => {
     fetch(`${ApiUrl}/experiments/${expid}`)
     .then((res)=>res.json())
     .then(data =>{
-      console.log("i am ", data)
-      console.log("i am here", data.datas)
+      
       const filtered = Object.entries(data.datas).filter(([key, value]) => key != '');
       const obj = Object.fromEntries(filtered)
-      console.log("i am here too",obj)
+
       for (const [key, values] of Object.entries(obj)) {
 
         document.getElementById(key).value=values
          }
-     
+         Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Data has been Retrived',
+          showConfirmButton: false,
+          timer: 1000
+        })
     
-    } );
- 
+    } )
+    .catch((error) => {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Error In data Retrive',
+        footer:"Retrive Error",
+        showConfirmButton: false,
+        timer: 1500
+      })
+    });
  
 
+  }
 
-  //   setData1(ress.datas)
+
+
+
+   
+// generate PDF
+// const generate = (event)=>{
+//   event.preventDefault();
+//     var doc = new jsPDF("p","pt","a1");
+//     doc.html(document.querySelector("#generator"),{
+//       callback: function(pdf){
+//         pdf.save("mypdf.pdf")
+//       }
+//     })
+//   }
+
+
+
+// generate word
+const  Export2Doc=(element, filename = '')=>{
+  var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+  var postHtml = "</body></html>";
+  var html = preHtml+document.getElementById(element).innerHTML+postHtml;
+  var blob = new Blob(['\ufeff', html],{
+      type: 'application/msword'
+  });
+  var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html)
+  filename = filename?filename+'.doc': 'document.doc';
+  var downloadLink = document.createElement("a");
+  document.body.appendChild(downloadLink);
+  if(navigator.msSaveOrOpenBlob){
+      navigator.msSaveOrOpenBlob(blob, filename);
+  }else{
+      downloadLink.href = url;
+      downloadLink.download = filename;
+      downloadLink.click();
+  }
+  document.body.removeChild(downloadLink);
+}
     
    
-  }
-  React.useEffect(init, [isData]);
- 
+
+  // React.useEffect(init, [isData]);
+  React.useEffect(init, []);
   const accordchange=()=>{
     setAccord(!accord)
   }
@@ -166,7 +219,7 @@ const Context = ({ value, dataV }) => {
   }
 
 
-
+//function to update the data 
   const updateval = (event) => {
     event.preventDefault();
     console.log("check", event.detail)
@@ -200,15 +253,17 @@ const Context = ({ value, dataV }) => {
 
 
 
+
+
   const uses = value?.html.child.map((ele) => ele);
-
-
   return (
     <div className={classes.root}>
-   
+
 
       {value? 
          <div >
+           {/* <div id="generator" style={{width:"600px", padding:"50px"}}> */}
+           <div id="generator" >
           <div className="containeer">
             <form >
                 {
@@ -226,7 +281,6 @@ const Context = ({ value, dataV }) => {
             </form>
           </div>
           <br /><br />
-         
           <Accordion  expanded={accord}>
             <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -256,12 +310,15 @@ const Context = ({ value, dataV }) => {
               </Typography>
             </AccordionDetails>
           </Accordion>
+          </div>
           <br /><br />
           <Stack spacing={2} direction="row" style={{ position: "relative", left: "25%" }}>
       
       <Button variant="contained" onClick={retrive}>Retrive &nbsp;&nbsp;&nbsp;<FaDownload/></Button>
       <Button variant="contained" onClick={updateval}>Save &nbsp;&nbsp;&nbsp;<ImCloudUpload/></Button>
-     
+      {/* <Button variant="contained" onClick={generate}>generate &nbsp;&nbsp;&nbsp;<GrDocumentPdf/></Button> */}
+      <Button variant="contained" onClick={()=>Export2Doc('generator', 'test')}>generate &nbsp;&nbsp;&nbsp;<SiMicrosoftword/></Button>
+   
     </Stack>
 
          

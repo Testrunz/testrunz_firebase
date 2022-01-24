@@ -22,7 +22,7 @@ router.get("/test/:_id", testId);
 
 router.post("/", postProcedure);
 
-router.patch("/:_id", patchProcedure);
+router.patch("/edit", patchProcedure);
 
 router.delete("/:_id", deleteProcedure);
 

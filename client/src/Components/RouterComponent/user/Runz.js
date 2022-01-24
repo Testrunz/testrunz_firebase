@@ -108,6 +108,7 @@ const Runz = (props) => {
      { title: "Lab Name", field: "labname" },
     { title: "Procedure ID    ", field: "ProcedureId" ,sorting:false },
     { title: "Description", field: "description" },
+    { title: "Created Time", field: "time" },
   ];
 
   const [page, setPage] = React.useState(0);
@@ -188,6 +189,7 @@ individuals.map((userr, ident) => {
         labname:userr.labType,
         ProcedureId: userr._id,
         description:userr.procedureDescription,
+        time:toString(userr.time) ,
 
       });
 
@@ -254,9 +256,7 @@ individuals.map((userr, ident) => {
               isFreeAction: true,
               onClick:() => openModal()
             }
-          ]}
-
-     
+          ]} 
         />
         }
       </div>

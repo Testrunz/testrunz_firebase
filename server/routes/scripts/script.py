@@ -432,7 +432,7 @@ def main(argv):
                     PowerEle(argument).THREE_PHASE_PWM_INVERTER()
                 elif((argument[len(argument) -3] == "AC") and (argument[len(argument) -2] == "VOLTAGE") and (argument[len(argument) -1] == "CONTROLLER")):
                     PowerEle(argument).AC_VOLTAGE_CONTROLLER()
-                elif((argument[len(argument) -4] == "SWITCHED") and (argument[len(argument) -3] == "MODE") and (argument[len(argument) -2] == "POWER") and (argument[len(argument) -1] == "INVERTER")):
+                elif((argument[len(argument) -4] == "SWITCHED") and (argument[len(argument) -3] == "MODE") and (argument[len(argument) -2] == "POWER") and (argument[len(argument) -1] == "CONVERTER")):
                     PowerEle(argument).SWITCHED_MODE_POWER_CONVERTER()
                 elif((argument[len(argument) -2] == "Specific") and (argument[len(argument) -1] == "Gravity")):                  
                     FirstYGtech(argument).Specific_Gravity()
