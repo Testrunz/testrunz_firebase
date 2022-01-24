@@ -115,19 +115,19 @@ class EDC:
         argument = self.arg[:]
         print(json.dumps({"answer":[{"Result":"Thus the VI characteristics of a Phototransistor is obtained."}]}))
     def TRIAC(self):
-    	argument = self.arg[:]
-    	print(json.dumps({"answer":[{"Result":"Thus the VI characteristics of TRIAC were determined."}]}))
+        argument = self.arg[:]
+        print(json.dumps({"answer":[{"Result":"Thus the VI characteristics of TRIAC were determined."}]}))
     def LED(self):
-    	argument = self.arg[:]
-    	print(json.dumps({"answer":[{"Result":"Thus the VI characteristics of LEDs are obtained."}]}))
+        argument = self.arg[:]
+        print(json.dumps({"answer":[{"Result":"Thus the VI characteristics of LEDs are obtained."}]}))
     def MOSFET(self):
-    	argument = self.arg[:]
-    	Vd = float(argument[2])-float(argument[1])
-    	Id = float(argument[4])-float(argument[3])
-    	Rd= (Vd/Id)*10**-3
-    	gm = float(argument[5])/float(argument[6])*10**-3
-    	factor = Rd*gm
-    	print(json.dumps({"answer":[{"Result":"Thus VI characteristics of MOSFET was determined."}]}))
+        argument = self.arg[:]
+        Vd = float(argument[2])-float(argument[1])
+        Id = float(argument[4])-float(argument[3])
+        Rd= (Vd/Id)*10**-3
+        gm = float(argument[5])/float(argument[6])*10**-3
+        factor = Rd*gm
+        print(json.dumps({"answer":[{"Result":"Thus VI characteristics of MOSFET was determined."}]}))
 
 
 

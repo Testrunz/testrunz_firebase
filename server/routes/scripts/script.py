@@ -11,13 +11,13 @@ from BEE import BEE
 from FirstYearCivil import FirstYCivil
 from MaterialAndMetallorgy import MAM
 from Dom import Dom
-#from ManufacturingProcess1 import MP1
-#from ManufacturingProcess2 import MP2
+from ManufacturingProcess1 import MP1
+from ManufacturingProcess2 import MP2
 from CommunicationLab1 import CL1
 from Network import NT
 from CommunicationLab2 import Com2
 from CommunicationLab3 import com3
-from PowerElectronics import PowerEle
+from PowerElec import PowerElec
 #from ElectronicDeviceCircuit import EDC
 from ElectronicCircuit1 import EC
 from ElectronicCircuit2 import EC2
@@ -27,6 +27,7 @@ from ThermalEngineeringLab1 import TE1
 from FirstYearGeotechnical import FirstYGtech
 from Electronic2 import E2
 from Electronic1 import EL1
+from ElectricElectronic import EE
 def main(argv):
     argument = ''
     usage = 'usage: script.py -f <sometext>'
@@ -224,7 +225,7 @@ def main(argv):
                     MP2(argument).Drilling()
                 elif((argument[len(argument) -3] == "Turning") and (argument[len(argument) -2] == "between") and (argument[len(argument) -1] == "centers")):
                     MP2(argument).Turning()
-                elif((argument[len(argument) -4] == "Multi") and (argument[len(argument) -3] == "start") and (argument[len(argument) -2] == "thread") and (argument[len(argument) -1] == "cutting")):
+                elif((argument[len(argument) -3] == "Start") and (argument[len(argument) -2] == "thread") and (argument[len(argument) -1] == "cut")):
                     MP2(argument).Multi()
                 elif((argument[len(argument) -2] == "Eccentric") and (argument[len(argument) -1] == "turning")):
                     MP2(argument).Eccentric()
@@ -232,7 +233,7 @@ def main(argv):
                     MP2(argument).Study()
                 elif((argument[len(argument) -3] == "Drilling") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "tapping")):
                     MP2(argument).Drilling()
-                elif((argument[len(argument) -4] == "Shaping") and (argument[len(argument) -3] == "and") and (argument[len(argument) -2] == "V-slot") and (argument[len(argument) -1] == "grooving")):
+                elif((argument[len(argument) -2] == "V-SLOT") and (argument[len(argument) -1] == "GROOVING")):
                     MP2(argument).Shaping()
                 elif((argument[len(argument) -2] == "Spline") and (argument[len(argument) -1] == "milling")):
                     MP2(argument).Spline()
@@ -392,9 +393,9 @@ def main(argv):
                     TE1(argument).Pin_Fin()
                 elif((argument[len(argument) -3] == "TIME") and (argument[len(argument) -2] == "DIVISION") and (argument[len(argument) -1] == "MULTIPLEXING")):
                     Com2(argument).TIME_DIVISION_MULTIPLEXING()
-                elif((argument[len(argument) -5] == "Mary") and (argument[len(argument) -4] == "ASK") and (argument[len(argument) -3] == "FSK") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "PSK")):                    
-                    Com2(argument).Mary_ASK_FSK_and_PSK()
-                elif((argument[len(argument) -4] == "BASK") and (argument[len(argument) -3] == "BFSK") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "BPSK")):
+                elif((argument[len(argument) -5] == "M-ary") and (argument[len(argument) -4] == "ASK,") and (argument[len(argument) -3] == "FSK,") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "PSK")):                    
+                    Com2(argument).Mary_ASK_FSK_and_PSK()     
+                elif((argument[len(argument) -4] == "BASK,") and (argument[len(argument) -3] == "BFSK") and (argument[len(argument) -2] == "and") and (argument[len(argument) -1] == "BPSK")):
                     Com2(argument).BASK_BFSK_and_BPSK()
                 elif((argument[len(argument) -2] == "RSA") and (argument[len(argument) -1] == "ALGORITHM")):
                     Com2(argument).RSA_ALGORITHM()
@@ -413,27 +414,33 @@ def main(argv):
                 elif((argument[len(argument) -1] == "FSK")):
                     Com2(argument).FSK()
                 elif((argument[len(argument) -3] == "Gate") and (argument[len(argument) -2] == "Pulse") and (argument[len(argument) -1] == "Generation")):
-                    PowerEle(argument).Gate_Pulse_Generation()
+                    PowerElec(argument).Gate_Pulse_Generation()
                 elif((argument[len(argument) -3] == "CHARACTERISTICS") and (argument[len(argument) -2] == "OF") and (argument[len(argument) -1] == "SCR")):
-                    PowerEle(argument).CHARACTERISTICS_OF_SCR()
+                    PowerElec(argument).CHARACTERISTICS_OF_SCR()
                 elif((argument[len(argument) -3] == "CHARACTERISTICS") and (argument[len(argument) -2] == "OF") and (argument[len(argument) -1] == "TRIAC")):
-                    PowerEle(argument).CHARACTERISTICS_OF_TRIAC()
+                    PowerElec(argument).CHARACTERISTICS_OF_TRIAC()
                 elif((argument[len(argument) -3] == "MOSFET") and (argument[len(argument) -2] == "&") and (argument[len(argument) -1] == "IGBT")):                 
-                    PowerEle(argument).MOSFET_IGBT()
+                    PowerElec(argument).MOSFET_IGBT()
                 elif((argument[len(argument) -2] == "HALF") and (argument[len(argument) -1] == "CONTROLLED")):                  
-                    PowerEle(argument).HALF_CONTROLLED()
+                    PowerElec(argument).HALF_CONTROLLED()
                 elif((argument[len(argument) -2] == "FULLY") and (argument[len(argument) -1] == "CONTROLLED")):                  
-                    PowerEle(argument).FULLY_CONTROLLED()
+                    PowerElec(argument).FULLY_CONTROLLED()
                 elif((argument[len(argument) -3] == "MOSFET") and (argument[len(argument) -2] == "BASED") and (argument[len(argument) -1] == "CHOPPERS")):
-                    PowerEle(argument).MOSFET_BASED_CHOPPERS()
+                    PowerElec(argument).MOSFET_BASED_CHOPPERS()
                 elif((argument[len(argument) -4] == "SINGLE") and (argument[len(argument) -3] == "PHASE") and (argument[len(argument) -2] == "PWM") and (argument[len(argument) -1] == "INVERTER")):
-                    PowerEle(argument).SINGLE_PHASE_PWM_INVERTER()
+                    PowerElec(argument).SINGLE_PHASE_PWM_INVERTER()
                 elif((argument[len(argument) -4] == "THREE") and (argument[len(argument) -3] == "PHASE") and (argument[len(argument) -2] == "PWM") and (argument[len(argument) -1] == "INVERTER")):
-                    PowerEle(argument).THREE_PHASE_PWM_INVERTER()
+                    PowerElec(argument).THREE_PHASE_PWM_INVERTER()
                 elif((argument[len(argument) -3] == "AC") and (argument[len(argument) -2] == "VOLTAGE") and (argument[len(argument) -1] == "CONTROLLER")):
+<<<<<<< HEAD
                     PowerEle(argument).AC_VOLTAGE_CONTROLLER()
                 elif((argument[len(argument) -4] == "SWITCHED") and (argument[len(argument) -3] == "MODE") and (argument[len(argument) -2] == "POWER") and (argument[len(argument) -1] == "CONVERTER")):
                     PowerEle(argument).SWITCHED_MODE_POWER_CONVERTER()
+=======
+                    PowerElec(argument).AC_VOLTAGE_CONTROLLER()
+                elif((argument[len(argument) -4] == "SWITCHED") and (argument[len(argument) -3] == "MODE") and (argument[len(argument) -2] == "POWER") and (argument[len(argument) -1] == "INVERTER")):
+                    PowerElec(argument).SWITCHED_MODE_POWER_CONVERTER()
+>>>>>>> d3b11cf6f9fe22051c67a47cb892f0f2b12aaf62
                 elif((argument[len(argument) -2] == "Specific") and (argument[len(argument) -1] == "Gravity")):                  
                     FirstYGtech(argument).Specific_Gravity()
                 elif((argument[len(argument) -2] == "Grain") and (argument[len(argument) -1] == "size")):                  
@@ -518,9 +525,10 @@ def main(argv):
                     EM2(argument).Direct_and_Quadrature_axis()
                 elif((argument[len(argument) -3] == "THREE-PHASE") and (argument[len(argument) -2] == "SQUIRREL") and (argument[len(argument) -1] == "CAGE")):                   
                     EM2(argument).Three_phase()
+                elif((argument[len(argument) -1] == "Single_Phase_Transformer")):
+                    EE(argument).single_trf()
                 else:
                     Dummy(argument).dummy()
-
             except ValueError:
                 print(json.dumps({"error":"value added error"}))
             
@@ -528,7 +536,3 @@ def main(argv):
 
 if __name__ == "__main__":
     main(sys.argv[1:])
-
-
-
-
