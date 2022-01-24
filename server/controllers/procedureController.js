@@ -58,9 +58,10 @@ const postProcedure = function (req, res, next) {
 };
 
 const patchProcedure = async (req, res) => {
+  console.log("the content",req.body.content)
   try {
     const updatedContent = await Content.findByIdAndUpdate(
-      { _id: req.params._id },
+      { _id: req.body.content },
       {
         $set: {
           title: req.body.title,

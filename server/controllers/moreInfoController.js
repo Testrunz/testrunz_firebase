@@ -17,10 +17,11 @@ const postInfo = function (req, res, next) {
 
 const patchById = async (req, res) => {
   try {
+    console.log("moreifo",req.body)
     const modifiedMetaInfo = await MetaInfo.findOneAndUpdate(
-      { id: req.params._id },
-      {
-        $set: {
+      // {id: req.body.edit_id },
+      {ProcedureName:req.body.experiment},
+      {$set: {
           ProcedureName: req.body.experiment,
           labtype: req.body.lab,
           department: req.body.department,
@@ -30,7 +31,7 @@ const patchById = async (req, res) => {
       },
       { new: true }
     );
-    res.json(modifiedMetaInfo);
+   res.json(modifiedMetaInfo);
   } catch (err) {
     console.error(err);
   }
