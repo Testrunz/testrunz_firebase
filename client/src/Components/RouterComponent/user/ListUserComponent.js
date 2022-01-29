@@ -16,6 +16,13 @@ import Setup from "./Setup";
 import { actionTypes } from '../../../data/reducer';
 import { useStateValue } from '../../../data/StateProvider';
 import Deleteaccount from "./Deleteaccount";
+import Mypage from "./Mypage";
+import ListIcon from '@material-ui/icons/List';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import SettingsIcon from '@material-ui/icons/Settings';
+
 
 
 function TabPanel(props) {
@@ -102,10 +109,11 @@ const ListUserComponent = (props) => {
         className={classes.tabs}
       >
        
-        <Tab label="Runz" {...a11yProps(0)} />
-        <Tab label="Procedure" {...a11yProps(1)} />
-        <Tab label="User" {...a11yProps(2)} />
-        <Tab label="Setup" {...a11yProps(3)} />
+        <Tab icon={<PlayCircleOutlineIcon/>}  label="Runz" {...a11yProps(0)} />
+        <Tab icon={<AssignmentTurnedInIcon/>}  label="Procedure" {...a11yProps(1)} />
+        <Tab icon={<AccountCircleIcon/>}  label="User" {...a11yProps(2)} />
+        <Tab icon={<SettingsIcon/>}  label="Setup" {...a11yProps(3)} />
+        <Tab icon={<ListIcon/>}  label="My Page" {...a11yProps(4)} />
 
       </Tabs>
       <TabPanel value={value} index={0} >
@@ -120,6 +128,9 @@ const ListUserComponent = (props) => {
       <TabPanel value={value} index={3}>
         <Setup {...props} />
         <Deleteaccount/>
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+       <Mypage/>
       </TabPanel>
  
      

@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 //import "./App.module.css";
 import Layout from "./core/Layout";
+import { useStateValue } from "./data/StateProvider";
+
 
 
 function Home() {
+  const [{ user }, dispatch] = useStateValue();
+
+  useEffect(() => {
+if (JSON.parse(localStorage.getItem('userdetail'))) { (window.location.href = "#/app")}
+  }, []);
+
   return (
     <Layout>
       <div className="container mt-5">

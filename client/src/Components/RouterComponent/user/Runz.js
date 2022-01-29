@@ -7,10 +7,12 @@ import Divider from "@mui/material/Divider";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 import { DataGrid } from "@material-ui/data-grid";
+import TextField from "@material-ui/core/TextField";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 import Modal from "react-modal";
 
@@ -25,12 +27,22 @@ import MaterialTable from 'material-table';
 
 
 import {FaRegEdit} from 'react-icons/fa';
+import {RiShareForwardFill} from 'react-icons/ri';
+
 import Loading from "./Lodaing"
+import { Button } from "@material-ui/core";
 
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+
+const style = {
+  marginTop: "55px",
+  display: "flex",
+  justifyContent: "center",
+};
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,6 +90,21 @@ const customStyles = {
   },
 };
 
+const customStylesshare = {
+  content: {
+    top: "50%",
+    left: "50%",
+    width: "30%",
+    height: "35%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "2%",
+  },
+};
+
+
 const customStylescell = {
   content: {
     color: "red",
@@ -100,6 +127,8 @@ const Runz = (props) => {
   const [modalOpenAdd, setModalOpenAdd] = useState(false);
   const [modalOpenEdit, setModalOpenEdit] = useState(false);
   const [loadingscreen, setLoadingscreen]=useState(true)
+  const [sharewith, setSharewith]=useState("")
+  const [datatoshare, setDatatoshare]=useState({})
   const columns1 = [
     { title: "ID", field: "id" },
     { title: "Procedure Name", field: "ProcedureName"  },
@@ -117,10 +146,12 @@ const Runz = (props) => {
     setPage(newPage);
   };
 
+
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
 
   // model setup
   const openModal = () => {
@@ -129,9 +160,7 @@ const Runz = (props) => {
   };
 
   const openModale = () => setModalOpenEdit(() => true);
-
   const closeModal = () => setModalOpenAdd(() => false);
-
   const closeModale = () => setModalOpenEdit(() => false);
 
 
@@ -142,6 +171,7 @@ const Runz = (props) => {
     setUsers(() => usersdum.data.data);
   };
 
+
   useEffect(() => {
     value();
     console.log(user);
@@ -150,9 +180,7 @@ const Runz = (props) => {
   
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
-      return;
-    }
-
+      return;  }
     setOpen(false);
   };
 
@@ -166,17 +194,60 @@ const Runz = (props) => {
     setOpen(true);
   };
 
-  const editUser = (id) => {
-    //window.localStorage.clear();
-    window.localStorage.setItem("userId", id);
+  // const editUser = (id) => {
+  //   //window.localStorage.clear();
+  //   window.localStorage.setItem("userId", id);
+  //   openModale();
+  //   console.log("this is id", id);
+  // };
+
+  const shareRunz =(data)=>{
+    // window.localStorage.setItem("userId", id);
     openModale();
-    console.log("this is id", id);
-  };
+    setDatatoshare(data)
+    console.log("this is iddetail", data);
+    console.log("this is id", datatoshare);
+  }
+  
+  
+  const sharerunzwith =()=>{
+    // window.localStorage.setItem("userId", id);
+   
+      let users={
+         _id:datatoshare.ProcedureId,
+          procedureDescription: datatoshare.description,
+          labType: datatoshare.labname,
+          experimentName: datatoshare.ProcedureName,
+          sharewith:sharewith,
+      }
+      let usermail ={
+        _id:datatoshare.ProcedureId,
+         procedureDescription: datatoshare.description,
+         labType: datatoshare.labname,
+         experimentName: datatoshare.ProcedureName,
+         sharewith:sharewith,
+         name:user.name
+     }
+
+
+      closeModale()
+    ApiService.editUser(users).then((res) => {
+      setMessage("User Added successfully.");
+      
+    });
+    ApiService.mailUser(usermail).then((res) => {
+      console.log("mail sent successfully.");
+      
+    });
+  }
+
+
 
   const playUser = (id) => {
     window.localStorage.removeItem("userId");
     window.localStorage.setItem("userId", id);
     props.history.push(`/userdash/${id}`);
+    // console.log("runid runz page", id)
   };
   let individuals = users.filter(function (userr) {return userr.userid == user._id;}).reverse();
 individuals.map((userr, ident) => {
@@ -189,11 +260,7 @@ individuals.map((userr, ident) => {
         labname:userr.labType,
         ProcedureId: userr._id,
         description:userr.procedureDescription,
-<<<<<<< HEAD
-        time:toString(userr.time) ,
-=======
-        time: userr.time.toString(),
->>>>>>> d3b11cf6f9fe22051c67a47cb892f0f2b12aaf62
+        time:Date(userr.time) ,
 
       });
 
@@ -217,10 +284,21 @@ individuals.map((userr, ident) => {
       <Modal
         isOpen={modalOpenEdit}
         onRequestClose={closeModale}
-        style={customStyles}
+        style={customStylesshare}
         contentLabel="Example Modal"
+        
       >
-        <EditUserComponent closeModale={closeModale} />
+         <Typography variant="h4" style={style}>
+        Share Runz
+      </Typography>
+      <br/><br/>
+    {datatoshare.ProcedureId}
+      <div >
+     <label>Share With:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+              <TextField id="outlined-basic"  size="small" variant="outlined" value={sharewith} onChange={(e)=>setSharewith(e.target.value)} />
+       
+      </div> 
+     <Button onClick={()=>sharerunzwith()}>Share</Button> 
       </Modal>
       <div style={{ maxWidth: '100%' }}>
         {loadingscreen ?<Loading/>:
@@ -229,22 +307,7 @@ individuals.map((userr, ident) => {
           data={rows}
           title="Runz"
           onRowClick= {(e,data) => playUser(data.ProcedureId)}
-          actions={[
-           {
-              icon: () => <FaRegEdit/>,
-              tooltip: "Edit",
-              onClick: (e, data) => editUser(data.ProcedureId)
-            },
-
-          ]}
-          editable={{
-            onRowDelete: (selectedRow) => new Promise((resolve, reject) => {
-              deleteUser(selectedRow.ProcedureId)
-              console.log(selectedRow)
-              setTimeout(() => resolve(), 500);
-            }),
-
-          }}
+     
           options={{
             actionsColumnIndex: -1, grouping:true,  pageSizeOptions:[5,10,15],pageSize:10,headerStyle: {
               zIndex:0
@@ -259,8 +322,22 @@ individuals.map((userr, ident) => {
               tooltip: 'Add Runz',
               isFreeAction: true,
               onClick:() => openModal()
-            }
+            },
+            {
+              icon: () => <RiShareForwardFill/>,
+              tooltip: "Share",
+               onClick: (e, data) => shareRunz(data)
+              // onClick: (e, data) => alert(data.ProcedureId)
+            },
           ]} 
+          editable={{
+            onRowDelete: (selectedRow) => new Promise((resolve, reject) => {
+              deleteUser(selectedRow.ProcedureId)
+              console.log(selectedRow)
+              setTimeout(() => resolve(), 500);
+            }),
+
+          }}
         />
         }
       </div>

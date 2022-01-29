@@ -8,6 +8,7 @@ const {
   patchUser,
   patchUser1,
   deleteUser,
+  mailUser,
   
 } = require("../controllers/experimentController");
 
@@ -25,6 +26,8 @@ router.get("/:_id", getSingleUser);
 // @desc a POST req for users registeration
 // @access public
 router.post("/", postUser);
+
+router.post("/mail", mailUser);
 
 // @route PATCH /users/update/<>
 // @desc a PATCH req for users registeration
