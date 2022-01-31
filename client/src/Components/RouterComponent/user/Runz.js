@@ -189,11 +189,8 @@ individuals.map((userr, ident) => {
         labname:userr.labType,
         ProcedureId: userr._id,
         description:userr.procedureDescription,
-<<<<<<< HEAD
-        time:toString(userr.time) ,
-=======
-        time: userr.time.toString(),
->>>>>>> d3b11cf6f9fe22051c67a47cb892f0f2b12aaf62
+        //time:toString(userr.time) ,
+        time: Date(userr.time),
 
       });
 

@@ -432,15 +432,9 @@ def main(argv):
                 elif((argument[len(argument) -4] == "THREE") and (argument[len(argument) -3] == "PHASE") and (argument[len(argument) -2] == "PWM") and (argument[len(argument) -1] == "INVERTER")):
                     PowerElec(argument).THREE_PHASE_PWM_INVERTER()
                 elif((argument[len(argument) -3] == "AC") and (argument[len(argument) -2] == "VOLTAGE") and (argument[len(argument) -1] == "CONTROLLER")):
-<<<<<<< HEAD
-                    PowerEle(argument).AC_VOLTAGE_CONTROLLER()
-                elif((argument[len(argument) -4] == "SWITCHED") and (argument[len(argument) -3] == "MODE") and (argument[len(argument) -2] == "POWER") and (argument[len(argument) -1] == "CONVERTER")):
-                    PowerEle(argument).SWITCHED_MODE_POWER_CONVERTER()
-=======
                     PowerElec(argument).AC_VOLTAGE_CONTROLLER()
                 elif((argument[len(argument) -4] == "SWITCHED") and (argument[len(argument) -3] == "MODE") and (argument[len(argument) -2] == "POWER") and (argument[len(argument) -1] == "INVERTER")):
                     PowerElec(argument).SWITCHED_MODE_POWER_CONVERTER()
->>>>>>> d3b11cf6f9fe22051c67a47cb892f0f2b12aaf62
                 elif((argument[len(argument) -2] == "Specific") and (argument[len(argument) -1] == "Gravity")):                  
                     FirstYGtech(argument).Specific_Gravity()
                 elif((argument[len(argument) -2] == "Grain") and (argument[len(argument) -1] == "size")):                  
