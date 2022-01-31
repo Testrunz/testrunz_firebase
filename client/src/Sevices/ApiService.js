@@ -23,8 +23,9 @@ class ApiService {
   editUser(user) {
     return axios.patch(USER_API_BASE_URL + "/" + user._id, user);
   }
-
-
+  mailUser(user) {
+    return axios.post(USER_API_BASE_URL + "/mail", user);
+  }
 }
 
 export default new ApiService();

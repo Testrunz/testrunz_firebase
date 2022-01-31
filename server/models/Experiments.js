@@ -36,6 +36,13 @@ const userSchema = new Schema({
     type: Map,
     of: String
 },
+shareWith:{
+  type:String,
+  
+},
+sharedDate:{
+type:Number,
+}
 
 });
 

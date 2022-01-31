@@ -39,7 +39,6 @@ export default function NavBar() {
       type: actionTypes.SET_USER,
       user: JSON.parse(localStorage.getItem('userdetail')),
    });
-  
   },[])
 
  

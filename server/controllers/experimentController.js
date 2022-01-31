@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
-
+const nodemailer = require('nodemailer')
 // load user model
 const User = require("../models/Experiments");
 
@@ -62,16 +62,17 @@ const postUser = (req, res, next) => {
 };
 
 const patchUser = async (req, res) => {
-  console.log("PATCH", req.params._id)
+  console.log("PATCH", req.body)
   try {
     const updatedUser = await User.findByIdAndUpdate(
       { _id: req.params._id },
       {
         $set: {
-          studentName: req.body.studentName,
           procedureDescription: req.body.procedureDescription,
           labType: req.body.labType,
           experimentName: req.body.experimentName,
+          shareWith:req.body.sharewith,
+          sharedDate:new Date().getTime(),
         },
       }
     );
@@ -112,6 +113,42 @@ const deleteUser = async (req, res) => {
   }
 };
 
+
+const mailUser = async (req, res) => {
+console.log("mail content",req.body)
+
+let message =`${req.body.name} submitted the prodedure of ${req.body.experimentName} from ${req.body.labType} Lab` 
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAILPASS
+  }
+});
+
+
+var mailOptions = {
+  from: process.env.EMAIL,
+  to: req.body.sharewith,
+  subject: 'Submitting Runz',
+  text: message 
+};
+
+
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent!!!');
+  }
+});
+
+
+
+};
+
 module.exports = {
   getExpAllUser,
   getSingleUser,
@@ -119,4 +156,5 @@ module.exports = {
   patchUser,
   patchUser1,
   deleteUser,
+  mailUser,
 };

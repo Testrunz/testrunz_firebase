@@ -31,6 +31,7 @@ import {RiShareForwardFill} from 'react-icons/ri';
 
 import Loading from "./Lodaing"
 import { Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 
 function Alert(props) {
@@ -113,55 +114,35 @@ const customStylescell = {
 };
 const fetchuser = async () => {
   let ress = await ApiService.fetchUsers();
-  console.log("rkijriotjioprjtfgjeriogj", ress);
   return ress;
 };
 
-const Runz = (props) => {
+const Mypage = () => {
   let rows = [];
   const [{ user }, dispatch] = useStateValue();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [users, setUsers] = useState([]);
-  const [message, setMessage] = useState(null);
-  const [modalOpenAdd, setModalOpenAdd] = useState(false);
-  const [modalOpenEdit, setModalOpenEdit] = useState(false);
   const [loadingscreen, setLoadingscreen]=useState(true)
-  const [sharewith, setSharewith]=useState("")
-  const [datatoshare, setDatatoshare]=useState({})
   const columns1 = [
     { title: "ID", field: "id" },
     { title: "Procedure Name", field: "ProcedureName"  },
     // { title: "Template Id", field: "TemplateId" },
     // { title: "Experiment Name", field: "ExperimentName" },
      { title: "Lab Name", field: "labname" },
-    { title: "Procedure ID    ", field: "ProcedureId" ,sorting:false },
-    { title: "Description", field: "description" },
-    { title: "Created Time", field: "time" },
+     { title: "Procedure ID    ", field: "ProcedureId" ,sorting:false },
+    { title: "Submitted By", field: "studentName" },
+    { title: "Submited Time", field: "sharedDate" },
   ];
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+
+  let history = useHistory();
 
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-
-  // model setup
-  const openModal = () => {
-    // window.localStorage.clear();
-    setModalOpenAdd(() => true);
-  };
-
-  const openModale = () => setModalOpenEdit(() => true);
-  const closeModal = () => setModalOpenAdd(() => false);
-  const closeModale = () => setModalOpenEdit(() => false);
+  useEffect(() => {
+    value();
+    console.log(user);
+  }, []);
 
 
   const value = async () => {
@@ -172,95 +153,55 @@ const Runz = (props) => {
   };
 
 
-  useEffect(() => {
-    value();
-    console.log(user);
-  }, [modalOpenAdd, modalOpenEdit]);
-
-  
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;  }
     setOpen(false);
   };
 
-  const deleteUser = async (userId) => {
-    await ApiService.deleteUser(userId).then(() => {
-      setUsers((prevUser) => prevUser.filter((user) => user._id !== userId));
-      setMessage("User deleted successfully.");
-    });
-    const deleteUser = users.find((user) => user._id === userId);
-    await axios.delete(`${ApiUrl}/notes/${deleteUser.runID}`);
-    setOpen(true);
-  };
-
-  // const editUser = (id) => {
-  //   //window.localStorage.clear();
-  //   window.localStorage.setItem("userId", id);
-  //   openModale();
-  //   console.log("this is id", id);
-  // };
-
-  const shareRunz =(data)=>{
-    // window.localStorage.setItem("userId", id);
-    openModale();
-    setDatatoshare(data)
-    console.log("this is iddetail", data);
-    console.log("this is id", datatoshare);
-  }
+  const deleteUser = async (data) => {
   
+  console.log("this isFinite", data)
+     
+        let user={
+           _id:data.ProcedureId,
+            procedureDescription: data.description,
+            labType: data.labname,
+            experimentName: data.ProcedureName,
+            sharewith:"",
+        }
   
-  const sharerunzwith =()=>{
-    // window.localStorage.setItem("userId", id);
-   
-      let users={
-         _id:datatoshare.ProcedureId,
-          procedureDescription: datatoshare.description,
-          labType: datatoshare.labname,
-          experimentName: datatoshare.ProcedureName,
-          sharewith:sharewith,
-      }
-      let usermail ={
-        _id:datatoshare.ProcedureId,
-         procedureDescription: datatoshare.description,
-         labType: datatoshare.labname,
-         experimentName: datatoshare.ProcedureName,
-         sharewith:sharewith,
-         name:user.name
-     }
-
-
-      closeModale()
-    ApiService.editUser(users).then((res) => {
-      setMessage("User Added successfully.");
-      
-    });
-    ApiService.mailUser(usermail).then((res) => {
-      console.log("mail sent successfully.");
-      
-    });
+    
+      ApiService.editUser(user).then((res) => {
+     
+        
+      });
+    
+  
   }
+
 
 
 
   const playUser = (id) => {
     window.localStorage.removeItem("userId");
     window.localStorage.setItem("userId", id);
-    props.history.push(`/userdash/${id}`);
-    // console.log("runid runz page", id)
+    history.push(`/userdash/${id}`);
+    // console.log("runid mypage", id)
   };
-  let individuals = users.filter(function (userr) {return userr.userid == user._id;}).reverse();
+  let individuals = users.filter(function (userr) {return userr.shareWith == user.email;}).reverse();
 individuals.map((userr, ident) => {
    
+  
       return rows.push({
         id: ident+1,
+        labname:userr.labType,
         ProcedureName: userr.experimentName,
         // TemplateId: userr.runID.slice(userr.runID.length - 12),
         // ExperimentName: userr.experimentName,
-        labname:userr.labType,
+        studentName:userr.studentName,
         ProcedureId: userr._id,
-        description:userr.procedureDescription,
-        time:Date(userr.time) ,
+        sharedDate:Date(userr.sharedDate),
 
       });
 
@@ -268,46 +209,14 @@ individuals.map((userr, ident) => {
 
   return (
     <div className={classes.root}>
-    
-      <Modal
-        isOpen={modalOpenAdd}
-        appElement={document.getElementById('root')}
-        style={customStyles}
-        contentLabel="add runz Modal"
-        disableBackdropClick="true"
-        sx={{ overflow: 'hidden' }}
-        
-      >
-        <AddUserComponent closeModal={closeModal} />
-      </Modal>
 
-      <Modal
-        isOpen={modalOpenEdit}
-        onRequestClose={closeModale}
-        style={customStylesshare}
-        contentLabel="Example Modal"
-        
-      >
-         <Typography variant="h4" style={style}>
-        Share Runz
-      </Typography>
-      <br/><br/>
-    {datatoshare.ProcedureId}
-      <div >
-     <label>Share With:</label>&nbsp;&nbsp;&nbsp;&nbsp;
-              <TextField id="outlined-basic"  size="small" variant="outlined" value={sharewith} onChange={(e)=>setSharewith(e.target.value)} />
-       
-      </div> 
-     <Button onClick={()=>sharerunzwith()}>Share</Button> 
-      </Modal>
       <div style={{ maxWidth: '100%' }}>
         {loadingscreen ?<Loading/>:
         <MaterialTable
           columns={columns1}
           data={rows}
-          title="Runz"
+          title="Submited"
           onRowClick= {(e,data) => playUser(data.ProcedureId)}
-     
           options={{
             actionsColumnIndex: -1, grouping:true,  pageSizeOptions:[5,10,15],pageSize:10,headerStyle: {
               zIndex:0
@@ -316,24 +225,11 @@ individuals.map((userr, ident) => {
           localization={{
             pagination:{labelRowsSelect:"Runz"}
           }}
-          actions={[
-            {
-              icon: 'add',
-              tooltip: 'Add Runz',
-              isFreeAction: true,
-              onClick:() => openModal()
-            },
-            {
-              icon: () => <RiShareForwardFill/>,
-              tooltip: "Share",
-               onClick: (e, data) => shareRunz(data)
-              // onClick: (e, data) => alert(data.ProcedureId)
-            },
-          ]} 
+     
           editable={{
-            onRowDelete: (selectedRow) => new Promise((resolve, reject) => {
-              deleteUser(selectedRow.ProcedureId)
-              console.log(selectedRow)
+            onRowDelete: (data) => new Promise((resolve, reject) => {
+               deleteUser(data)
+           
               setTimeout(() => resolve(), 500);
             }),
 
@@ -343,7 +239,7 @@ individuals.map((userr, ident) => {
       </div>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          {message}
+       
         </Alert>
       </Snackbar>
 
@@ -352,4 +248,6 @@ individuals.map((userr, ident) => {
   );
 };
 
-export default Runz;
+
+
+export default Mypage;
