@@ -30,7 +30,7 @@ class EM1:
         E3 = (OP3/IP3)*100
         E4 = (OP4/IP4)*100
         E5 = (OP5/IP5)*100
-        E = (E1+E2+E3+E4+E5)/5
+        E = round((E1+E2+E3+E4+E5),2)/5
         print(json.dumps({"Impact":[{"Thus load test on DC shunt motor is conducted and its efficiency is determined":str(E)+ "%" }]}))
         # print(json.dumps({"Impact":[{"Thus load test on DC shunt motor is conducted and its efficiency is determined":str(IP1)+ "%" }]}))
 
