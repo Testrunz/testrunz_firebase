@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Userprofile from './Userprofile';
 import Activity from './Activity';
-
 import AccessManagement from './AccessManagement';
 
 
@@ -49,11 +48,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    width:"600px"
+    width:"100%"
   },
 }));
 
-export default function SimpleTabs() {
+export default function User() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -65,10 +64,16 @@ export default function SimpleTabs() {
     <div className={classes.root}>
       
       <AppBar position="static" >
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example"  >
-          <Tab label="Profile"  {...a11yProps(0)} style={{width:"200px"}} />
-          <Tab label="Activity"  {...a11yProps(1)} style={{width:"200px"}}/>
-          <Tab label="AccessManagement" {...a11yProps(2)} style={{width:"200px"}}/>
+        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" style={{background: '#F1C232'}} 
+        TabIndicatorProps={{  
+      style: {
+          // display: "none",
+          backgroundColor:"white"
+      },
+    }}  >
+          <Tab label="Profile"  {...a11yProps(0)} style={{width:"200px",color:"black"}} />
+          <Tab label="Activity"  {...a11yProps(1)} style={{width:"200px",color:"black"}}/>
+          <Tab label="AccessManagement" {...a11yProps(2)} style={{width:"200px",color:"black"}}/>
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>

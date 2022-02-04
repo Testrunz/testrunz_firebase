@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "./Components/NavBar/NavBar";
+// import NavBar from "./Components/NavBar/NavBar";
 import AppRouter from "./Components/RouterComponent/RouterComponent";
 
 
@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <AppRouter />
     </div>
   );

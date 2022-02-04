@@ -1,3 +1,21 @@
+// import React from 'react';
+// import Typography from '@mui/material/Typography';
+// import Toolbar from '@material-ui/core/Toolbar';
+// const OuterNav = () => {
+//     const runz = () => {
+//         window.localStorage.clear();
+//        return (window.location.href = "/");
+//       }
+//   return (
+//   <div>
+//        <Toolbar>
+//              <Typography onClick={runz}> <span>Test</span><span style={{backgroundColor:"#F1C232",cursor: "pointer"}}>RunZ</span></Typography>
+//         </Toolbar>
+//   </div>
+//     );
+// };
+
+// export default OuterNav;
 import React ,{useState,useEffect, useLayoutEffect}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -59,11 +77,10 @@ const OuterNav = () => {
  
     
     return (
-        <div>
-             <AppBar  >
+      
      
      <Toolbar >
-     <Typography onClick={runz} className={classes.pointer} sx={{ flexGrow: 1 }} variant="h6" component="div" className='pointer'>TESTRUNZ </Typography>
+             <Typography onClick={runz} sx={{ flexGrow: 1 }} > <span>Test</span><span style={{backgroundColor:"#F1C232",cursor: "pointer"}}>RunZ</span></Typography>
      <div className='navhide'>
      <Grid
    container
@@ -113,10 +130,9 @@ const OuterNav = () => {
      </div>
  
      </Toolbar>
-       </AppBar>
-            
-        </div>
+    
     )
 }
 
 export default OuterNav
+

@@ -159,7 +159,7 @@ const App = (props) => {
     e.preventDefault();
   };
   const goBack = () => {
-    props.history.push("/app");
+    props.history.push("/procedure");
   };
   return (
     <div className={classes.root}>

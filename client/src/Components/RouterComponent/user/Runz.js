@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 
 import axios from "axios";
-
+import Swal from 'sweetalert2'
 import Divider from "@mui/material/Divider";
 
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
@@ -31,6 +31,11 @@ import {RiShareForwardFill} from 'react-icons/ri';
 
 import Loading from "./Lodaing"
 import { Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+
+const USER_API_BASE_URL = `${ApiUrl}/experiments`;
 
 
 function Alert(props) {
@@ -53,27 +58,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
-  tablecontainer: {
-    borderRadius: "15px",
-    overflowX: "hidden",
-  },
-  tableCellhead: {
-    fontWeight: "bold",
-    backgroundColor: "#3F51B5",
-    align: "center",
-    // color:theme.palette.getContrastText(theme.palette.primary.dark)
-  },
-  tableCellbody: {
-    fontWeight: "bold",
-    align: "center",
 
-    // color:theme.palette.getContrastText(theme.palette.primary.dark)
-  },
-  buttons: {
-    "&:hover": {
-      backgroundColor: "grey",
-    },
-  },
 }));
 
 const customStyles = {
@@ -95,7 +80,7 @@ const customStylesshare = {
     top: "50%",
     left: "50%",
     width: "30%",
-    height: "35%",
+    height: "50%",
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
@@ -117,7 +102,7 @@ const fetchuser = async () => {
   return ress;
 };
 
-const Runz = (props) => {
+const Runz = () => {
   let rows = [];
   const [{ user }, dispatch] = useStateValue();
   const classes = useStyles();
@@ -128,15 +113,18 @@ const Runz = (props) => {
   const [modalOpenEdit, setModalOpenEdit] = useState(false);
   const [loadingscreen, setLoadingscreen]=useState(true)
   const [sharewith, setSharewith]=useState("")
+  const [sharewitherror, setSharewitherror]=useState("")
   const [datatoshare, setDatatoshare]=useState({})
+  const history = useHistory()
+
   const columns1 = [
     { title: "ID", field: "id" },
-    { title: "Procedure Name", field: "ProcedureName"  },
+    { title: "Procedure Name", field: "ProcedureName" ,width:"25%" },
     // { title: "Template Id", field: "TemplateId" },
     // { title: "Experiment Name", field: "ExperimentName" },
-     { title: "Lab Name", field: "labname" },
-    { title: "Procedure ID    ", field: "ProcedureId" ,sorting:false },
-    { title: "Description", field: "description" },
+     { title: "Lab Name", field: "labname" , width:"15%"},
+    { title: "Procedure ID    ", field: "ProcedureId" ,width:"18%",sorting:false },
+    { title: "Description", field: "description",width:"18%" },
     { title: "Created Time", field: "time" },
   ];
 
@@ -212,7 +200,7 @@ const Runz = (props) => {
   
   const sharerunzwith =()=>{
     // window.localStorage.setItem("userId", id);
-   
+    setSharewitherror("")
       let users={
          _id:datatoshare.ProcedureId,
           procedureDescription: datatoshare.description,
@@ -230,15 +218,36 @@ const Runz = (props) => {
      }
 
 
-      closeModale()
-    ApiService.editUser(users).then((res) => {
-      setMessage("User Added successfully.");
-      
-    });
-    ApiService.mailUser(usermail).then((res) => {
-      console.log("mail sent successfully.");
-      
-    });
+if(sharewith==""||null){
+  setSharewitherror("Enter a mail Id")
+}
+   else{
+    axios.post(USER_API_BASE_URL + "/mail", usermail)
+    .then((res) => {
+              console.log(res.data)
+              if(res.data == "error"){
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Check the Email or internet connection',
+               
+                })
+              }
+              else{
+              console.log("mail sent successfully.");
+              ApiService.editUser(users)
+              .then((res) => {
+                   ;
+                      Swal.fire(
+                        'Shared',
+                        'Runz has beed shared and mailed',
+                        'success'
+                      )
+                      closeModale()
+              })
+            }
+    })
+  }
   }
 
 
@@ -246,7 +255,7 @@ const Runz = (props) => {
   const playUser = (id) => {
     window.localStorage.removeItem("userId");
     window.localStorage.setItem("userId", id);
-    props.history.push(`/userdash/${id}`);
+    history.push(`/userdash/${id}`);
     // console.log("runid runz page", id)
   };
   let individuals = users.filter(function (userr) {return userr.userid == user._id;}).reverse();
@@ -260,7 +269,7 @@ individuals.map((userr, ident) => {
         labname:userr.labType,
         ProcedureId: userr._id,
         description:userr.procedureDescription,
-        time:Date(userr.time) ,
+        time:new Date(userr.time).toDateString(),
 
       });
 
@@ -288,20 +297,28 @@ individuals.map((userr, ident) => {
         contentLabel="Example Modal"
         
       >
-         <Typography variant="h4" style={style}>
+         <Typography variant="h5" style={style}>
         Share Runz
       </Typography>
       <br/><br/>
-    {datatoshare.ProcedureId}
-      <div >
+    {/* {datatoshare.ProcedureId} */}
+      <div style={{width:"100%"}}>
      <label>Share With:</label>&nbsp;&nbsp;&nbsp;&nbsp;
               <TextField id="outlined-basic"  size="small" variant="outlined" value={sharewith} onChange={(e)=>setSharewith(e.target.value)} />
-       
+              <p className='errormsg'>{sharewitherror}</p>
       </div> 
-     <Button onClick={()=>sharerunzwith()}>Share</Button> 
+      <br/>
+      <div  style={{display: "flex",justifyContent:"center"}}>
+     <Button  style={{background: '#F1C232',width:"50%"}}  onClick={()=>sharerunzwith()}>Share</Button> 
+     </div>
+     <br/>
+      <div  style={{display: "flex",justifyContent:"center"}}>
+     <Button  color="secondary"  variant="contained" style={{width:"50%"}}  onClick={()=>sharerunzwith()}>Share</Button> 
+     </div>
+
       </Modal>
       <div style={{ maxWidth: '100%' }}>
-        {loadingscreen ?<Loading/>:
+        {loadingscreen ?<Loading />:
         <MaterialTable
           columns={columns1}
           data={rows}

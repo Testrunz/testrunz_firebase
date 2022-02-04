@@ -1,3 +1,5 @@
+
+var ObjectId = require('mongodb').ObjectId;
 const MetaInfo = require("../models/MetaInfo");
 
 const postInfo = function (req, res, next) {
@@ -18,15 +20,17 @@ const postInfo = function (req, res, next) {
 const patchById = async (req, res) => {
   try {
     console.log("moreifo",req.body)
-    const modifiedMetaInfo = await MetaInfo.findOneAndUpdate(
-      // {id: req.body.edit_id },
-      {ProcedureName:req.body.experiment},
+
+    const modifiedMetaInfo = await MetaInfo.findByIdAndUpdate(
+      // req.body.editid
+      req.body._id,
       {$set: {
           ProcedureName: req.body.experiment,
           labtype: req.body.lab,
           department: req.body.department,
           year: req.body.year,
           college: req.body.college,
+          semester: req.body.semester,
         },
       },
       { new: true }

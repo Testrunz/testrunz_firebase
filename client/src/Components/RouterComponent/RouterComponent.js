@@ -14,7 +14,7 @@ import Signup from "../../authent/Signup";
 import Signin from "../../authent/Signin";
 import Forgot from "../../authent/forgot";
 
-
+import Sidelayout from "./user/Sidelayout"
 import Private from "../../core/private";
 
 
@@ -22,12 +22,17 @@ import PrivateRoute from "../../authent/PrivateRoute";
 import AdminRoute from "../../authent/AdminRoute";
 
 import Google1 from "../../authent/Google1";
-
+import Runz from "./user/Runz";
+import Mypage from "./user/Mypage";
+import Procedurelist from "./user/ProcedureList";
+import User from "./user/User";
 
 const RouterComponent = () => {
   return (
     <div>
         <Router>
+          
+        <Sidelayout>
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/signup" exact component={Signup} />
@@ -36,7 +41,10 @@ const RouterComponent = () => {
             <Route path="/Google1" exact component={Google1} /> 
             <Route path="/forgot_password" component={Forgot} />
             <PrivateRoute path="/private" exact component={Private} />
-            <PrivateRoute path="/app" exact component={ListUserComponent} />
+            <PrivateRoute path="/runz" exact component={Runz} /> 
+            <PrivateRoute path="/app" exact component={Mypage} /> 
+            <PrivateRoute path="/procedure" exact component={Procedurelist} /> 
+            <PrivateRoute path="/profile" exact component={User} /> 
             <PrivateRoute path="/add-user" exact component={AddUserComponent} />
             <PrivateRoute
               path="/edit-user"
@@ -55,6 +63,7 @@ const RouterComponent = () => {
               component={EditProcedure}
             />
           </Switch>
+          </Sidelayout>
         </Router>
     </div>
   );

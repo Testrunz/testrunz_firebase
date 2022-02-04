@@ -117,7 +117,7 @@ const deleteUser = async (req, res) => {
 const mailUser = async (req, res) => {
 console.log("mail content",req.body)
 
-let message =`${req.body.name} submitted the prodedure of ${req.body.experimentName} from ${req.body.labType} Lab` 
+let message =`${req.body.name} submitted the prodedure of ${req.body.experimentName} from ${req.body.labType} Lab open the following Link to check http://localhost:3000/#/userdash/${req.body._id}` 
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -139,9 +139,11 @@ var mailOptions = {
 
 transporter.sendMail(mailOptions, function(error, info){
   if (error) {
-    console.log(error);
+    console.log("here comes the error",error);
+    res.json("error")
   } else {
     console.log('Email sent!!!');
+    res.json("sent!!!")
   }
 });
 

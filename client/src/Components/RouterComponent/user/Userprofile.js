@@ -1,7 +1,7 @@
 
 import { useStateValue } from '../../../data/StateProvider';
 
-
+import Divider from '@mui/material/Divider';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,9 +10,14 @@ import { useHistory, Link } from "react-router-dom";
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@mui/material/Button';
-
 import ApiUrl from "../../../ServerApi";
 import { actionTypes } from "../../../data/reducer"
+
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 const Userprofile = () => {
 
   const [{ user }, dispatch] = useStateValue();
@@ -101,8 +106,9 @@ const Userprofile = () => {
 
   return (
     <div>
-
-      <Button variant="contained" color="primary" style={{ alignItems: "right" }} onClick={() => setEditbt(!editbt)}>edit</Button>
+<div style={{display:"flex",justifyContent:"flex-end"}}>
+      <Button variant="contained"  style={{ backgroundColor:"#F1C232",color:"black" }} onClick={() => setEditbt(!editbt)}>edit</Button>
+      </div>
       <br />
 
       <hr />
@@ -191,10 +197,10 @@ const Userprofile = () => {
               </>
             )}
             <br />
-            <div style={{ alignItems: "center" }}>
-              <button className="btn btn-primary" onClick={clickSubmit}>
+            <div >
+              <Button style={{ backgroundColor:"#F1C232",color:"black" }} onClick={clickSubmit}>
                 {btnText}
-              </button>
+              </Button>
               <br />
 
             </div>
@@ -202,37 +208,75 @@ const Userprofile = () => {
         </div>
         :
         <div>
-          <span>Name:</span>
 
-          <span>{user.name}</span>
-          <br />
+<Card>
+  <CardContent style={{backgroundColor:"#E7EBF0"}}>
+  <Grid container spacing={2} columns={16}>
+  <Grid item xs={8}>
+  <span style={{fontWeight: "bold"}}>Name:</span>
+<br/>
+<span style={{fontStyle: "italic",color:"gray"}}>{user.name}</span>
+  </Grid>
+  <Grid item xs={8}>
+  <span  style={{fontWeight: "bold"}}>Email:</span>
+  <br/>
+<span style={{fontStyle: "italic",color:"gray"}}>{user.email}</span>
+  </Grid>
 
-          <span>Email:</span>
-          <span>{user.email}</span>
-          <br />
-          <span>Designation:</span>
-          <span>{user.designation}</span>
-          <br />
-          <span>CollegeName:</span>
-          <span>{user.collegeName}</span>
-          <br />
-          <span>Department:</span>
-          <span>{user.department}</span>
-          <br />
-          <span>Role:</span>
-          <span>{user.role}</span>
-          <br />
-          <span>Country:</span>
-          <span>{user.country}</span>
-          <br />
-          <span>State:</span>
-          <span>{user.state}</span>
-          <br />
-          <span>Year:</span>
-          <span>{user.year}</span>
-          <br />
-          <span>Semester:</span>
-          <span>{user.semester}</span>
+  <Grid item xs={8}>
+  <span  style={{fontWeight: "bold"}}>Designation:</span>
+  <br/>
+<span style={{fontStyle: "italic",color:"gray"}}>{user.designation}</span>
+  </Grid>
+  <Grid item xs={8}>
+  <span  style={{fontWeight: "bold"}}>CollegeName:</span>
+  <br/>
+<span style={{fontStyle: "italic",color:"gray"}}>{user.collegeName}</span>
+  </Grid>
+
+  <Grid item xs={8}>
+  <span  style={{fontWeight: "bold"}}>Department:</span>
+  <br/>
+<span style={{fontStyle: "italic",color:"gray"}}>{user.department}</span>
+  </Grid>
+  <Grid item xs={8}>
+  <span  style={{fontWeight: "bold"}}>Role:</span>
+  <br/>
+<span style={{fontStyle: "italic",color:"gray"}}>{user.role}</span>
+  </Grid>
+  
+  <Grid item xs={8}>
+  <span  style={{fontWeight: "bold"}}>Country:</span>
+  <br/>
+<span style={{fontStyle: "italic",color:"gray"}}>{user.country}</span>
+  </Grid>
+  <Grid item xs={8}>
+  <span  style={{fontWeight: "bold"}}>State:</span>
+  <br/>
+<span style={{fontStyle: "italic",color:"gray"}}>{user.state}</span>
+  </Grid>
+
+  <Grid item xs={8}>
+  <span  style={{fontWeight: "bold"}}>Year:</span>
+  <br/>
+<span style={{fontStyle: "italic",color:"gray"}}>{user.year ? user.year :"null"}</span>
+  </Grid>
+  <Grid item xs={8}>
+  <span  style={{fontWeight: "bold"}}>Semester:</span>
+  <br/>
+<span style={{fontStyle: "italic",color:"gray"}}>{user.semester ? user.semester : "null" }</span>
+  </Grid>
+</Grid>
+
+
+
+
+  </CardContent>
+</Card>
+
+
+          
+          
         </div>
 
 

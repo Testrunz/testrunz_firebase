@@ -10,6 +10,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import MaterialTable from 'material-table';
 import Loading from "./Lodaing"
+import { useHistory } from "react-router-dom";
 
 import ApiUrl from "../../../ServerApi"
 function Alert(props) {
@@ -26,11 +27,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Procedurelist = (props) => {
+const Procedurelist = () => {
   const [dat, setDat] = useState(null);
   const classes = useStyles();
   const [loadingscreen, setLoadingscreen]=useState(true)
-  
+  const history = useHistory()
+
   const [{prosid}, dispatch] = useStateValue();
   const columns1 = [
     { title: "ID", field: "id" },
@@ -55,7 +57,7 @@ const Procedurelist = (props) => {
 
   const addProc = () => {
    // window.localStorage.clear();
-    props.history.push("/addProce");
+    history.push("/addProce");
   };
 
   const editProc = (id) => {
@@ -69,7 +71,7 @@ const Procedurelist = (props) => {
       prosid: id,
    });
 
-    props.history.push(`/editProce/${id}`);
+    history.push(`/editProce/${id}`);
   };
 
   return (

@@ -92,7 +92,7 @@ section .container .user .formBx form input {
  section .container .user .formBx form button {
   /* position: relative;
   max-width: 1700px; */
-  background: #3F51B5;
+  background: #F1C232;
   color: #fff;
   /*cursor: pointer;
   font-size: 14px;
@@ -132,7 +132,7 @@ section .container .user .formBx form .signinup {
 section .container .user .formBx form .signinup a {
   font-weight: 600;
   text-decoration: none;
-  color: #3F51B5;
+  color: #F1C232;
 
 }
 

@@ -48,33 +48,14 @@ const style = {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "70vw",
-    height: "70vh",
+    height: "50vh",
     maxWidth: "75vw",
     "& > * + *": {
       marginTop: theme.spacing(2),
     },
-  },
-  tablecontainer: {
-    borderRadius: "15px",
-    overflowX: "hidden",
-  },
-  tableCellhead: {
-    fontWeight: "bold",
-    backgroundColor: "#3F51B5",
-    align: "center",
-    // color:theme.palette.getContrastText(theme.palette.primary.dark)
-  },
-  tableCellbody: {
-    fontWeight: "bold",
-    align: "center",
+  }
 
-    // color:theme.palette.getContrastText(theme.palette.primary.dark)
-  },
-  buttons: {
-    "&:hover": {
-      backgroundColor: "grey",
-    },
-  },
+  
 }));
 
 const customStyles = {
@@ -126,13 +107,13 @@ const Mypage = () => {
   const [loadingscreen, setLoadingscreen]=useState(true)
   const columns1 = [
     { title: "ID", field: "id" },
-    { title: "Procedure Name", field: "ProcedureName"  },
+    { title: "Procedure Name", field: "ProcedureName" , width:"25%"},
     // { title: "Template Id", field: "TemplateId" },
     // { title: "Experiment Name", field: "ExperimentName" },
-     { title: "Lab Name", field: "labname" },
-     { title: "Procedure ID    ", field: "ProcedureId" ,sorting:false },
-    { title: "Submitted By", field: "studentName" },
-    { title: "Submited Time", field: "sharedDate" },
+     { title: "Lab Name", field: "labname", width:"15%"},
+     { title: "Procedure ID    ", field: "ProcedureId",width:"18%" ,sorting:false },
+    { title: "Submitted By", field: "studentName",width:"18%" },
+    { title: "Submited Time", field: "sharedDates" },
   ];
 
 
@@ -201,7 +182,7 @@ individuals.map((userr, ident) => {
         // ExperimentName: userr.experimentName,
         studentName:userr.studentName,
         ProcedureId: userr._id,
-        sharedDate:Date(userr.sharedDate),
+        sharedDates:new Date(userr.sharedDate).toDateString(),
 
       });
 
@@ -210,7 +191,7 @@ individuals.map((userr, ident) => {
   return (
     <div className={classes.root}>
 
-      <div style={{ maxWidth: '100%' }}>
+      <div style={{ maxWidth: '100%', }}>
         {loadingscreen ?<Loading/>:
         <MaterialTable
           columns={columns1}
@@ -219,7 +200,7 @@ individuals.map((userr, ident) => {
           onRowClick= {(e,data) => playUser(data.ProcedureId)}
           options={{
             actionsColumnIndex: -1, grouping:true,  pageSizeOptions:[5,10,15],pageSize:10,headerStyle: {
-              zIndex:0
+              zIndex:0,tableLayout:"fixed"
             }     
           }}
           localization={{
