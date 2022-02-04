@@ -27,13 +27,13 @@ def main(argv):
                     MECH(argument).SPEED_CONTROL()
                 elif((argument[len(argument) -3] == "Single") and (argument[len(argument) -3] == "Phase") and (argument[len(argument) -1] == "Transformer")):
                     MECH(argument).Single_Phase_Transformer()
-                elif((argument[len(argument) -2] == "SWINBURNES") and (argument[len(argument) -1] == "TEST")):
+                elif((argument[len(argument) -2] == "SWINBURNE’S") and (argument[len(argument) -1] == "TEST")):
                     MECH(argument).SWINBURNES_TEST()
                 elif((argument[len(argument) -4] == "OS") and (argument[len(argument) -3] == "DC") and (argument[len(argument) -2] == "SHUNT") and (argument[len(argument) -1] == "MOTOR")):
                     MECH(argument).OS_DC_SHUNT_MOTOR()
                 elif((argument[len(argument) -3] == "efficiency") and (argument[len(argument) -3] == "motor") and (argument[len(argument) -1] == "generator")):
                     MECH(argument).efficiency_motor_generator()
-                elif((argument[len(argument) 4] == "Three") and (argument[len(argument) -3] == "PHASE") and (argument[len(argument) -2] == "SQUIRREL") and (argument[len(argument) -1] == "CAGE")):
+                elif((argument[len(argument) -4] == "Three") and (argument[len(argument) -3] == "PHASE") and (argument[len(argument) -2] == "SQUIRREL") and (argument[len(argument) -1] == "CAGE")):
                     MECH(argument).Three_PHASE_SQUIRREL_CAGE()
 
                     
