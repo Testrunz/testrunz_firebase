@@ -30,7 +30,7 @@ class EM1:
         E3 = (OP3/IP3)*100
         E4 = (OP4/IP4)*100
         E5 = (OP5/IP5)*100
-        E = round((E1+E2+E3+E4+E5),2)/5
+        E = round((E1+E2+E3+E4+E5)/5,2)
         print(json.dumps({"Impact":[{"Thus load test on DC shunt motor is conducted and its efficiency is determined":str(E)+ "%" }]}))
         # print(json.dumps({"Impact":[{"Thus load test on DC shunt motor is conducted and its efficiency is determined":str(IP1)+ "%" }]}))
 
@@ -61,7 +61,7 @@ class EM1:
         E3 = (OP3/IP3)*100
         E4 = (OP4/IP4)*100
         E5 = (OP5/IP5)*100
-        E = (E1+E2+E3+E4+E5)/5
+        E = round((E1+E2+E3+E4+E5)/5,2)
         print(json.dumps({"Impact":[{"Thus load test on DC series motor is conducted and its efficiency is determined":str(E)+ "%" }]}))
     def DC_COMPOUND_MOTOR(self):
         argument = self.arg[:]
@@ -90,7 +90,7 @@ class EM1:
         E3 = (OP3/IP3)*100
         E4 = (OP4/IP4)*100
         E5 = (OP5/IP5)*100
-        E = (E1+E2+E3+E4+E5)/5
+        E = round((E1+E2+E3+E4+E5)/5,2)
         print(json.dumps({"Impact":[{"Thus load test on DC compound motor is conducted and its efficiency is determined":str(E)+ "%" }]}))
     def SELF(self):
         print(json.dumps({"answer":[{"result":"Thus open circuit characteristics of self excited DC shunt generator are obtained and its critical resistance is determined."}]}))
@@ -102,32 +102,33 @@ class EM1:
         R2 = float(argument[3])/float(argument[4])
         R3 = float(argument[5])/float(argument[6])
         R4 = float(argument[7])/float(argument[8])
-        I1 = float(argument[1])+float(argument[2])
-        I2 = float(argument[4])+float(argument[5])
-        I3 = float(argument[7])+float(argument[8])
-        I4 = float(argument[10])+float(argument[11])
-        F1 = float(argument[3])+(I1*R1)
-        F2 = float(argument[6])+(I2*R2)
-        F3 = float(argument[9])+(I3*R3)
-        F4 = float(argument[12])+(I4*R4)
-        F = (F1+F2+F3+F4)/4
-        print(json.dumps({"Impact":[{"Thus load characteristics of separately excited DC shunt generator is obtained.":str(F)+ "%" }]}))
+        I1 = float(argument[9])+float(argument[10])
+        I2 = float(argument[12])+float(argument[13])
+        I3 = float(argument[15])+float(argument[16])
+        I4 = float(argument[18])+float(argument[19])
+        Rmean=round((R1+R2+R3+R4)/4,2)
+        F1 = round(float(argument[11])+(I1*Rmean),2)
+        F2 = round(float(argument[14])+(I2*Rmean),2)
+        F3 = round(float(argument[17])+(I3*Rmean),2)
+        F4 = round(float(argument[20])+(I4*Rmean),2)
+        print(json.dumps({"Impact":[{"Thus load characteristics of separately excited DC shunt generator is obtained- Mean value of Ra":str(Rmean), "Actually Generated Voltage_1": str(F1),"Actually Generated Voltage_2": str(F2),"Actually Generated Voltage_3": str(F3), "Actually Generated Voltage_4": str(F4)}]}))
     def Load_Self(self):
         argument = self.arg[:]
         R1 = float(argument[1])/float(argument[2])
         R2 = float(argument[3])/float(argument[4])
         R3 = float(argument[5])/float(argument[6])
         R4 = float(argument[7])/float(argument[8])
-        I1 = float(argument[1])+float(argument[2])
-        I2 = float(argument[4])+float(argument[5])
-        I3 = float(argument[7])+float(argument[8])
-        I4 = float(argument[10])+float(argument[11])
-        F1 = float(argument[3])+(I1*R1)
-        F2 = float(argument[6])+(I2*R2)
-        F3 = float(argument[9])+(I3*R3)
-        F4 = float(argument[12])+(I4*R4)
-        F = (F1+F2+F3+F4)/4
-        print(json.dumps({"Impact":[{"Thus load characteristics of self excited DC shunt generator is obtained.":str(F)+ "%" }]}))
+        I1 = float(argument[9])+float(argument[10])
+        I2 = float(argument[12])+float(argument[13])
+        I3 = float(argument[15])+float(argument[16])
+        I4 = float(argument[18])+float(argument[19])
+        Rmean=round((R1+R2+R3+R4)/4,2)
+        F1 = round(float(argument[11])+(I1*Rmean),2)
+        F2 = round(float(argument[14])+(I2*Rmean),2)
+        F3 = round(float(argument[17])+(I3*Rmean),2)
+        F4 = round(float(argument[20])+(I4*Rmean),2)
+        print
+       # print(json.dumps({"Impact":[{"Thus load characteristics of separately excited DC shunt generator is obtained- Mean value of Ra":str(Rmean), "Actually Generated Voltage_1": str(F1),"Actually Generated Voltage_2": str(F2),"Actually Generated Voltage_3": str(F3), "Actually Generated Voltage_4": str(F4)}]}))
     def Hopkin(self):
         argument = self.arg[:]
         Ra1 = (float(argument[2])+float(argument[3]))/2
@@ -228,64 +229,22 @@ class EM1:
 
     def SWINBURNE(self):
         argument = self.arg[:]
-        Ra = 2.7
-        Ia1 = float(argument[3])**2*Ra
-        Ia2 = float(argument[6])**2*Ra
-        Ia3 = float(argument[9])**2*Ra
-        Ia4 = float(argument[12])**2*Ra
-        T1 = Ia1 +(float(argument[1])*float(argument[3]))-Ia1
-        T2 = Ia2 +(float(argument[4])*float(argument[6]))-Ia2
-        T3 = Ia3 +(float(argument[7])*float(argument[9]))-Ia3
-        T4 = Ia4 +(float(argument[10])*float(argument[12]))-Ia4
-        I1 = float(argument[1])*float(argument[2])
-        I2 = float(argument[4])*float(argument[5])
-        I3 = float(argument[7])*float(argument[8])
-        I4 = float(argument[10])*float(argument[11])
-        O1 = I1-T1
-        O2 = I2-T2
-        O3 = I3-T3
-        O4 = I4-T4
-        E1 = (O1/I1)*100
-        E2 = (O2/I2)*100
-        E3 = (O3/I3)*100
-        E4 = (O4/I4)*100
-        ra = 2.7
-        ia1 = float(argument[15])**2*ra
-        ia2 = float(argument[18])**2*ra
-        ia3 = float(argument[21])**2*ra
-        ia4 = float(argument[24])**2*ra
-        t1 = Ia1 +(float(argument[13])*float(argument[15]))-ia1
-        t2 = Ia2 +(float(argument[16])*float(argument[18]))-ia2
-        t3 = Ia3 +(float(argument[19])*float(argument[21]))-ia3
-        t4 = Ia4 +(float(argument[22])*float(argument[24]))-ia4
-        i1 = float(argument[13])*float(argument[14])
-        i2 = float(argument[16])*float(argument[15])
-        i3 = float(argument[19])*float(argument[20])
-        i4 = float(argument[22])*float(argument[23])
-        o1 = I1-T1
-        o2 = I2-T2
-        o3 = I3-T3
-        o4 = I4-T4
-        e1 = (o1/i1)*100
-        e2 = (o2/i2)*100
-        e3 = (o3/i3)*100
-        e4 = (o4/i4)*100
-        R1= 1.2*(float(argument[27])/float(argument[26]))
-        R2= 1.2*(float(argument[30])/float(argument[29]))
-        R3= 1.2*(float(argument[33])/float(argument[32]))
-        R4= 1.2*(float(argument[36])/float(argument[35]))
-        A1 = float(argument[25])/float(argument[26])
-        A2 = float(argument[28])/float(argument[29])
-        A3 = float(argument[31])/float(argument[32])
-        A4 = float(argument[34])/float(argument[35])
-        v1 = float(argument[27])+(A*R1)
-        v2 = float(argument[30])+(A*R2)
-        v3 = float(argument[33])+(A*R3)
-        v4 = float(argument[36])+(A*R4)
-        V=(v1+v2+v3+v4)/4
-        print(json.dumps({"answer":[{"result":"Thus the efficiency and regulation of a transformer is predetermined by conducting open circuit test and short circuit test and the equivalent circuit is drawn.","Ans":str(V)}]}))
-
-    
+        Ra1 = round(float(argument[7])/ float(argument[8]),2)
+        Ra2 = round(float(argument[9])/ float(argument[10]),2)
+        Ra3 = round(float(argument[11])/ float(argument[12]),2)
+        Ra4 = round(float(argument[13])/ float(argument[14]),2)
+        Ra_mean = round((Ra1+Ra2+Ra3+Ra4)/4,2)
+        Cl1_g=round(float(argument[20])**2*Ra_mean,2)
+        Cl2_g=round(float(argument[25])**2*Ra_mean,2)
+        Cl3_g=round(float(argument[30])**2*Ra_mean,2)
+        Cl4_g=round(float(argument[35])**2*Ra_mean,2)
+        print(json.dumps({"answer":[{"Thus the efficiency and regulation of a transformer is predetermined by conducting open circuit test and short circuit test and the equivalent circuit is drawn - Armature Resistance(Ra)":str(Ra_mean)}] ,"cl1":[{"Generator Copper loss_1":str(Cl1_g)}],"cl2":[{"Generator Copper loss_2":str(Cl2_g)}],"cl3":[{"Generator Copper loss_3":str(Cl3_g)}],"cl4":[{"Generator Copper loss_4":str(Cl4_g)}]}))
+        OP1_g= round(float(argument[21])*float(argument[18]))
+        OP2_g= round(float(argument[26])*float(argument[23]))
+        OP3_g= round(float(argument[31])*float(argument[28]))
+        OP4_g= round(float(argument[36])*float(argument[33]))
+        print(json.dumps({"answer":[{"Generator Output Power_1(Po)":str(OP1_g)}],"op1":[{"Generator Output Power_2(Po)":str(OP2_g)}],"op2":[{"Generator Output Power_3(Po)":str(OP3_g)}],"cl3":[{"Generator Output Power_4(Po)":str(OP4_g)}]}))
+        Tl1_g=round(Cl1_g)
         
 
 

@@ -2,7 +2,8 @@
 import sys, getopt, time
 import json
 from Dummy import Dummy
-from FirstYearPhysics import FirstYPhysics
+#from FirstYearPhysics import FirstYPhysics
+from physics_1 import Physics_acet
 from FirstYearChemistry import FirstYChemistry
 from EnvironmentEngineeringLab import EVS
 from MaterialTesting2 import MT2
@@ -365,6 +366,8 @@ def main(argv):
                     EM1(argument).Load_Separately()
                 elif((argument[len(argument) -3] == "Load") and (argument[len(argument) -2] == "self") and (argument[len(argument) -1] == "DC")):
                     EM1(argument).Load_Self()
+                elif((argument[len(argument) -2] == "SWINBURNE’S") and (argument[len(argument) -1] == "TEST")):
+                    EM1(argument).SWINBURNE()
                 elif((argument[len(argument) -1] == "Hopkin")):
                     EM1(argument).Hopkin()
                 elif((argument[len(argument) -2] == "Speed") and (argument[len(argument) -1] == "control")):
@@ -519,6 +522,8 @@ def main(argv):
                     EM2(argument).Direct_and_Quadrature_axis()
                 elif((argument[len(argument) -3] == "THREE-PHASE") and (argument[len(argument) -2] == "SQUIRREL") and (argument[len(argument) -1] == "CAGE")):                   
                     EM2(argument).Three_phase()
+                elif((argument[len(argument) -1] == "Single_Phase_Transformer")):
+                    EE(argument).single_trf()
                 elif((argument[len(argument) -1] == "Single_Phase_Transformer")):
                     EE(argument).single_trf()
                 else:
