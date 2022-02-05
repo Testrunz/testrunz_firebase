@@ -3,7 +3,7 @@ import sys, getopt, time
 import json
 from Dummy import Dummy
 #from FirstYearPhysics import FirstYPhysics
-from physics_1 import Physics_acet
+from physics_1 import PHY
 from FirstYearChemistry import FirstYChemistry
 from EnvironmentEngineeringLab import EVS
 from MaterialTesting2 import MT2
@@ -44,7 +44,9 @@ def main(argv):
         elif opt in ("-f", "--foo"):
             argument = arg.split()
             try:
-                if((argument[len(argument) -2] == "Vibration") and (argument[len(argument) -1] == "Magnetometer")):
+                if((argument[len(argument) -1] == "Vibrational_magnetometer_1")):
+                    PHY(argument).VB_Mag()
+                elif((argument[len(argument) -2] == "Vibration") and (argument[len(argument) -1] == "Magnetometer")):
                     FirstYPhysics(argument).vibration_magnetometer()
                 elif((argument[len(argument) -3] == "Air") and (argument[len(argument) -2] == "Wedge") and (argument[len(argument) -1] == "Experiment")):
                     FirstYPhysics(argument).Air_wedge()

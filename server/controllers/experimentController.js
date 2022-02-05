@@ -117,12 +117,9 @@ const deleteUser = async (req, res) => {
 const mailUser = async (req, res) => {
 console.log("mail content",req.body)
 
-<<<<<<< HEAD
-let message =`${req.body.name} submitted the prodedure of ${req.body.experimentName} from ${req.body.labType} Lab open the following Link to check http://localhost:3000/#/userdash/${req.body._id}` 
 
-=======
-let message =`${req.body.name} submitted the prodedure of ${req.body.experimentName} from ${req.body.labType} Lab open the following Link to check http://localhost:3000/#/userdash/${req.body._id}`
->>>>>>> d9f661079fedff51b6c69db4ac5e324c3164f8d1
+let message =`${req.body.name} submitted the prodedure of ${req.body.experimentName} from ${req.body.labType} Lab open the following Link to check http://testrunz.com/#/userdash/${req.body._id}` 
+
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
