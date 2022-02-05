@@ -118,7 +118,7 @@ const mailUser = async (req, res) => {
 console.log("mail content",req.body)
 
 
-let message =`${req.body.name} submitted the prodedure of ${req.body.experimentName} from ${req.body.labType} Lab open the following Link to check http://testrunz.com/#/userdash/${req.body._id}` 
+let message =`${req.body.name} submitted the prodedure of ${req.body.experimentName} from ${req.body.labType} Lab open the following Link to check${ process.env.MAIL_URL+req.body._id}` 
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',

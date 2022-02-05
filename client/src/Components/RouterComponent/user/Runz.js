@@ -292,9 +292,11 @@ individuals.map((userr, ident) => {
 
       <Modal
         isOpen={modalOpenEdit}
-        onRequestClose={closeModale}
+        appElement={document.getElementById('root')}
         style={customStylesshare}
         contentLabel="Example Modal"
+        disableBackdropClick="true"
+        // onRequestClose={closeModale}
         
       >
          <Typography variant="h5" style={style}>
@@ -313,7 +315,7 @@ individuals.map((userr, ident) => {
      </div>
      <br/>
       <div  style={{display: "flex",justifyContent:"center"}}>
-     <Button  color="secondary"  variant="contained" style={{width:"50%"}}  onClick={()=>sharerunzwith()}>Share</Button> 
+     <Button  color="secondary"  variant="contained" style={{width:"50%"}}  onClick={()=>closeModale()}>Close</Button> 
      </div>
 
       </Modal>

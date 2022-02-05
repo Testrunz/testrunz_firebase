@@ -119,10 +119,10 @@ const App = (props) => {
         />
         <br />
         <br />
-        <p>Semaster: {state1.semester ?? "year"}</p>
+        <p>Semester: {state1.semester ?? "year"}</p>
         <input
           className="semester"
-          placeholder="semester"
+          placeholder="Semester"
           type="text"
           ref={semesterRef}
         />
@@ -223,28 +223,10 @@ const App = (props) => {
   const handleSave = (e) => {
     // /moreInfo
 console.log("content here",titleRef.current.value)
-if(titleRef.current.value == "" || null){
-alert("enter all field")
-}
-else if (labRef.current.value == "" || null){
-alert("enter all field")
-}
-else if (departmentRef.current.value == "" || null){
-alert("enter all field")
-}
-else if (yearRef.current.value == "" || null){
-alert("enter all field")
-}
-else if (collegeRef.current.value == "" || null){
-alert("enter all field")
-}
-else if (semesterRef.current.value == "" || null){
-  alert("enter all field")
-  }
-else{
+
     axios
       .patch(`${ApiUrl}/procedures/edit`, {
-        title: titleRef.current.value,
+        title: titleRef.current.value ||  state1.experiment,
         html: e.target.getContent(),
         content:content,
       })
@@ -254,21 +236,21 @@ else{
         axios
           .patch(`${ApiUrl}/moreInfo/edit`, {
             editid:res.data._id,
-            experiment: titleRef.current.value,
-            lab: labRef.current.value ,
-            department: departmentRef.current.value,
-            year: yearRef.current.value ,
-            college: collegeRef.current.value ,
-            semester: semesterRef.current.value,
+            experiment: titleRef.current.value || state1.experiment,
+            lab: labRef.current.value || state1.lab,
+            department: departmentRef.current.value || state1.department,
+            year: yearRef.current.value || state1.year,
+            college: collegeRef.current.value || state1.college,
+            semester: semesterRef.current.value || state1.semester,
             _id:state1._id
           })
           .then((res) => {
   console.log("done phase2",res.data)
             setMessage("Template modified successfully.");
-//             setOpen(true);
+           setOpen(true);
           });
       });
- } };
+  };
 
 
   const handleChange = (content, editor) => {
@@ -318,6 +300,7 @@ else{
       >
         refresh<RefreshIcon />
       </p>
+      <br/>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
           {message}
