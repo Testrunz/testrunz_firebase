@@ -50,6 +50,8 @@ def main(argv):
                     PHY(argument).prism()   
                 elif((argument[len(argument) -1] == "Air_wedge_1")):
                     PHY(argument).Air_wed()
+                elif((argument[len(argument) -1] == "Prism_1")):
+                    PHY(argument).prism()  
                 elif((argument[len(argument) -2] == "Vibration") and (argument[len(argument) -1] == "Magnetometer")):
                     FirstYPhysics(argument).vibration_magnetometer()
                 elif((argument[len(argument) -3] == "Air") and (argument[len(argument) -2] == "Wedge") and (argument[len(argument) -1] == "Experiment")):
