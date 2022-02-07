@@ -60,7 +60,6 @@ class PHY:
     def Air_wed(self):
         argument = self.arg[0:]
         def CR(x,y):
-<<<<<<< HEAD
             return (x+(y*0.001))
         def W5(x,y):
             return (y-x)
@@ -101,44 +100,6 @@ class PHY:
         print(json.dumps({"Result":[{"Mean frindge width":str(MeanBeta)}]}))
         #print(json.dumps({"ans":[{"mean b":str(m),"s":str(CR_Mean)}]}))
 
-=======
-            return x+(y*0.001)
-        def W5(x,y):
-            return y-x
-        
-        CR1= round(float(argument[1],float(argument[2])),3)
-        CR2= round(float(argument[5],float(argument[6])),3)
-        CR3= round(float(argument[9],float(argument[10])),3)
-        CR4= round(float(argument[13],float(argument[14])),3)
-        CR5= round(float(argument[17],float(argument[18])),3)
-        CR6= round(float(argument[21],float(argument[22])),3)
-        CR7= round(float(argument[25],float(argument[26])),3)
-        CR8= round(float(argument[29],float(argument[30])),3)
-        CR9= round(float(argument[33],float(argument[34])),3)
-        CR10= round(float(argument[37],float(argument[38])),3)
-        CR11= round(float(argument[41],float(argument[42])),3)
-        Width_2= round(W5(CR1,CR2),3)
-        Width_3= round(W5(CR2,CR3),3)
-        Width_4= round(W5(CR3,CR4),3)
-        Width_5= round(W5(CR4,CR5),3)
-        Width_6= round(W5(CR5,CR6),3)
-        Width_7= round(W5(CR6,CR7),3)
-        Width_8= round(W5(CR7,CR8),3)
-        Width_9= round(W5(CR8,CR9),3)
-        Width_10= round(W5(CR9,CR10),3)
-        Width_11= round(W5(CR10,CR11),3)
-        Mean_width2= round(Width_2/5,4)
-        Mean_width3= round(Width_3/5,4)
-        Mean_width4= round(Width_4/5,4)
-        Mean_width5= round(Width_5/5,4)
-        Mean_width6= round(Width_6/5,4)
-        Mean_width7= round(Width_7/5,4)
-        Mean_width8= round(Width_8/5,4)
-        Mean_width9= round(Width_9/5,4)
-        Mean_width10= round(Width_10/5,4)
-        Mean_width11= round(Width_11/5,4)
-        MeanBeta= round(Mean_width2+Mean_width3+Mean_width4+Mean_width5+Mean_width6+Mean_width7+Mean_width8+Mean_width9+Mean_width10+Mean_width11)
->>>>>>> 91fc823d6a2a1313dd684528fe66d7dd4488dc19
 
 
 

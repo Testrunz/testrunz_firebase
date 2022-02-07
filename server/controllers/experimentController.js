@@ -132,7 +132,7 @@ var transporter = nodemailer.createTransport({
 var mailOptions = {
   from: process.env.EMAIL,
   to: req.body.sharewith,
-  subject: 'Submitting Runz',
+  subject: 'Sharing Runz',
   text: message 
 };
 
@@ -143,8 +143,8 @@ transporter.sendMail(mailOptions, function(error, info){
     console.log("here comes the error",error);
     res.json("error")
   } else {
-    console.log('Email sent!!!');
     res.json("sent!!!")
+    console.log('Email sent!!!');
   }
 });
 
