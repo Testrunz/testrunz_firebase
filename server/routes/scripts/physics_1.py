@@ -10,13 +10,13 @@ class PHY:
             ans = x+(y*0.01)
             return ans
         def CR_b(x,y):
-            return x*(y*0.01)
+            return x+(y*0.01)
         def TP1(x):
             return x/5
         def TP2(x):
             return x/10
         def TP3(x):
-            return x/30
+            return (x*10)/30
         def l2(x):
             return x**2
         def b2(x):
@@ -38,20 +38,69 @@ class PHY:
         CRb4= CR_b(OR1,(float(argument[14])))
         CRb5= CR_b(OR1,(float(argument[14])))
         CRb_Mean = round((CRb1+CRb2+CRb3+CRb4+CRb5)/5,2)
-        T1= TP1(float(argument[26]))
-        T2= TP2(float(argument[27]))
-        T3= TP3(float(argument[28]))
-        T4= TP1(float(argument[29]))
-        T5= TP1(float(argument[30]))
-        T6= TP1(float(argument[31]))
+        T1= round(TP1(float(argument[26])),2)
+        T2= round(TP2(float(argument[27])),2)
+        T3= round(TP3(float(argument[28])),2)
+        T4= round(TP1(float(argument[29])),2)
+        T5= round(TP2(float(argument[30])),2)
+        T6= round(TP3(float(argument[31])),2)
         Mean_T1 = round((T1+T2+T3)/3,2)
         Mean_T2 = round((T4+T5+T6)/3,2)
         Mean_T= round((Mean_T1+Mean_T2)/2,2)
-        length=l2(CR_Mean)
-        breadth=b2(CRb_Mean)    
-        Inertia = round((float(argument[25])*(length+breadth))/12,3)
-        T= round(Mean_T **2,2)      
+        length=round((l2(CR_Mean))/10,2)
+        breadth=round((b2(CRb_Mean))/100,2)
+        lb=round((length+breadth)/12,3)
+        lb_n= lb*10
+        Inertia = round(((float(argument[25]))*lb_n)*10,3)
+        T= round(Mean_T**2,1)      
         Mh= round((39.43 * Inertia)/T,2)
-        m=round(Mh/2*CR_Mean,3)
-        # print(json.dumps({"ans":"ans"}))
-        print(json.dumps({"Result":[{"Vibrational Magnetometer":"Length of the bar magnet ","Mean(length)" : str(CR_Mean),"Mean(breadth)":str(CRb_Mean),"Time period of oscillator":str(Mean_T),"Inertia":str(Inertia),"The magnetic moment of the given bar magnet(Mh)":str(Mh)}]}))
+        m=round((Mh/(2*CR_Mean))*10,3)
+        #print(json.dumps({"ans":[{"mean b":str(m),"s":str(CR_Mean)}]}))
+        print(json.dumps({"Result":[{"Vibrational Magnetometer":"Length of the bar magnet ","Mean(length)" : str(CR_Mean),"Mean(breadth)":str(CRb_Mean),"Time period of oscillator":str(Mean_T),"Inertia":str(Inertia),"The magnetic moment of the given bar magnet(Mh)":str(Mh)+"x 10^-5 Am^2","The pole strength of the given bar magnet(m)":str(m)+"x10^-4 Am"}]}))
+    def Air_wed(self):
+        argument = self.arg[0:]
+        def CR(x,y):
+            return (x+(y*0.001))
+        def W5(x,y):
+            return (y-x)
+        def MW(x):
+            return(x/5)
+        CR1= CR(float(argument[1]),float(argument[2]))
+        CR2= CR(float(argument[5]),float(argument[6]))
+        CR3= CR(float(argument[9]),float(argument[10]))
+        CR4= CR(float(argument[13]),float(argument[14]))
+        CR5= CR(float(argument[17]),float(argument[18]))
+        CR6= CR(float(argument[21]),float(argument[22]))
+        CR7= CR(float(argument[25]),float(argument[26]))
+        CR8= CR(float(argument[29]),float(argument[30]))
+        CR9= CR(float(argument[33]),float(argument[34]))
+        CR10=CR(float(argument[37]),float(argument[38]))
+        CR11=CR(float(argument[41]),float(argument[42]))
+        Width_2= (W5(CR1,CR2))
+        Width_3= (W5(CR2,CR3))
+        Width_4= (W5(CR3,CR4))
+        Width_5= (W5(CR4,CR5))
+        Width_6= (W5(CR5,CR6))
+        Width_7= (W5(CR6,CR7))
+        Width_8= (W5(CR7,CR8))
+        Width_9= (W5(CR8,CR9))
+        Width_10= (W5(CR9,CR10))
+        Width_11= (W5(CR10,CR11))
+        Mean_width2= MW(Width_2)
+        Mean_width3= MW(Width_3)
+        Mean_width4= MW(Width_4)
+        Mean_width5= MW(Width_5)
+        Mean_width6= MW(Width_6)
+        Mean_width7= MW(Width_7)
+        Mean_width8= MW(Width_8)
+        Mean_width9= MW(Width_9)
+        Mean_width10=MW (Width_10)
+        Mean_width11= MW(Width_11)
+        MeanBeta= round((Mean_width2 + Mean_width3+Mean_width4+Mean_width5+Mean_width6+Mean_width7+Mean_width8+Mean_width9+Mean_width10+Mean_width11)/12,4)
+        print(json.dumps({"Result":[{"Mean frindge width":str(MeanBeta)}]}))
+        #print(json.dumps({"ans":[{"mean b":str(m),"s":str(CR_Mean)}]}))
+
+
+
+
+
