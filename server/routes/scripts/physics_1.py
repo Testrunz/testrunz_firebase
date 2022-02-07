@@ -95,7 +95,7 @@ class PHY:
         Mean_width9= round(Width_9/5,4)
         Mean_width10= round(Width_10/5,4)
         Mean_width11= round(Width_11/5,4)
-        MeanBeta= round(Mean_width2+Mean_width3+Mean_width4+Mean_width5+Mean_width6+Mean_width7+Mean_width8+Mean_width9+Mean_width10+Mean_width11)
+        MeanBeta= round((Mean_width2+Mean_width3+Mean_width4+Mean_width5+Mean_width6+Mean_width7+Mean_width8+Mean_width9+Mean_width10+Mean_width11)/12,4)
 
 
 
