@@ -65,17 +65,19 @@ class PHY:
             return (y-x)
         def MW(x):
             return(x/5)
+        def EOF1(x,y):
+            return(y+(x*0.01))
         CR1= CR(float(argument[1]),float(argument[2]))
-        CR2= CR(float(argument[5]),float(argument[6]))
-        CR3= CR(float(argument[9]),float(argument[10]))
-        CR4= CR(float(argument[13]),float(argument[14]))
-        CR5= CR(float(argument[17]),float(argument[18]))
-        CR6= CR(float(argument[21]),float(argument[22]))
-        CR7= CR(float(argument[25]),float(argument[26]))
-        CR8= CR(float(argument[29]),float(argument[30]))
-        CR9= CR(float(argument[33]),float(argument[34]))
-        CR10=CR(float(argument[37]),float(argument[38]))
-        CR11=CR(float(argument[41]),float(argument[42]))
+        CR2= CR(float(argument[3]),float(argument[4]))
+        CR3= CR(float(argument[5]),float(argument[6]))
+        CR4= CR(float(argument[7]),float(argument[8]))
+        CR5= CR(float(argument[9]),float(argument[10]))
+        CR6= CR(float(argument[11]),float(argument[12]))
+        CR7= CR(float(argument[13]),float(argument[14]))
+        CR8= CR(float(argument[15]),float(argument[16]))
+        CR9= CR(float(argument[17]),float(argument[18]))
+        CR10=CR(float(argument[19]),float(argument[20]))
+        CR11=CR(float(argument[21]),float(argument[22]))
         Width_2= (W5(CR1,CR2))
         Width_3= (W5(CR2,CR3))
         Width_4= (W5(CR3,CR4))
@@ -97,10 +99,65 @@ class PHY:
         Mean_width10=MW (Width_10)
         Mean_width11= MW(Width_11)
         MeanBeta= round((Mean_width2 + Mean_width3+Mean_width4+Mean_width5+Mean_width6+Mean_width7+Mean_width8+Mean_width9+Mean_width10+Mean_width11)/12,4)
-        print(json.dumps({"Result":[{"Mean frindge width":str(MeanBeta)}]}))
-        #print(json.dumps({"ans":[{"mean b":str(m),"s":str(CR_Mean)}]}))
+        R1 = EOF1(float(argument[24]),float(argument[23]))
+        R2 = CR(float(argument[25]),float(argument[26]))
+        l= round(R2-R1,3)
+        t= round(((5896*l)/(2*MeanBeta)),3)
+        ts=t/100000
+        print(json.dumps({"ans":[{"Mean frindge width(β)":str(MeanBeta),"The distance between edge of contact and wire(l)":str(l)+"m","Thickness of given specimen is found by forming interfernce fringe using air wedge arrangement - Thickness ofspeciemnt(t)=":str(ts)}]}))
+    def prism(self):
+        argument = self.arg[0:]
+        def TR(x,y):
+            return(x+(y*0.01))  
+        def VA(x,y):
+            return (y-x)
+        def VB(x,y):
+            return(x-y)
+        tr_al= TR(float(argument[1]),float(argument[2]))
+        tr_bl= TR(float(argument[3]),float(argument[4]))
+        tr_ar= TR(float(argument[5]),float(argument[6]))
+        tr_br= TR(float(argument[7]),float(argument[8]))
+        trA= VA(tr_al,tr_ar)
+        trB=VB(tr_bl,tr_br)
+        VA= round(trA,2)
+        VB=round(trB/2)
+        A= round((VA+VB)/4,2)
+        print(json.dumps({"ans":[{"Angle of prism(Va)":str(VA)+"m","Angle of (VB)":str(VB)+"m","Angle of (A)":str(A)+"m"}]}))
+        Dtr_a=TR(float(argument[9]),float(argument[10]))
+        Vtr_a=TR(float(argument[13]),float(argument[14]))
+        Btr_a=TR(float(argument[17]),float(argument[18]))
+        BGtr_a=TR(float(argument[21]),float(argument[22]))
+        Gtr_a=TR(float(argument[25]),float(argument[26]))
+        Ytr_a=TR(float(argument[29]),float(argument[30]))
+        Otr_a=TR(float(argument[33]),float(argument[34]))
+        Rtr_a=TR(float(argument[37]),float(argument[38]))
 
+        Dtr_b=TR(float(argument[11]),float(argument[12]))
+        Vtr_b=TR(float(argument[15]) ,float(argument[16]))
+        Btr_b=TR(float(argument[19]),float(argument[20]))
+        BGtr_b=TR(float(argument[23]),float(argument[24]))
+        Gtr_b=TR(float(argument[27]),float(argument[28]))
+        Ytr_b=TR(float(argument[31]),float(argument[32]))
+        Otr_b=TR(float(argument[35]),float(argument[36]))
+        Rtr_b=TR(float(argument[39]),float(argument[40]))
 
+        vva= Dtr_a - Vtr_a
+        bva= Dtr_a - Btr_a
+        bgva= Dtr_a - BGtr_a
+        gva= Dtr_a - Gtr_a
+        yva= Dtr_a - Ytr_a
+        ova= Dtr_a - Otr_a
+        rva= Dtr_a - Rtr_a
+
+        vvb= Dtr_b - Vtr_b
+        bvb= Dtr_b - Btr_b
+        bgvb= Dtr_b - BGtr_b
+        gvb= Dtr_b - Gtr_b
+        yvb= Dtr_b - Ytr_b
+        ovb= Dtr_b - Otr_b
+        rvb= Dtr_b - Rtr_b
+
+        print(json.dumps({"ans":[{"d":str(vvb),"s":str(bvb),"e":str(bgvb),"r":str(gvb),"y":str(yvb),"o":str(ovb),"u":str(rvb)}]}))
 
 
 
