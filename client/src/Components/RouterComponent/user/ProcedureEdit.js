@@ -222,7 +222,7 @@ const App = (props) => {
   };
   const handleSave = (e) => {
     // /moreInfo
-console.log("content here",titleRef.current.value)
+// console.log("content here",titleRef.current.value)
 
     axios
       .patch(`${ApiUrl}/procedures/edit`, {
@@ -232,7 +232,7 @@ console.log("content here",titleRef.current.value)
       })
       .then((res) => {
   console.log("done phase1",res.data)
-  console.log("done phase1",titleRef.current.value,labRef.current.value)
+  // console.log("done phase1",titleRef.current.value,labRef.current.value)
         axios
           .patch(`${ApiUrl}/moreInfo/edit`, {
             editid:res.data._id,

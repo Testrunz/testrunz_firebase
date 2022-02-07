@@ -105,10 +105,10 @@ class PHY:
         t= round(((5896*l)/(2*MeanBeta)),3)
         ts=t/100000
         print(json.dumps({"ans":[{"Mean frindge width(β)":str(MeanBeta),"The distance between edge of contact and wire(l)":str(l)+"m","Thickness of given specimen is found by forming interfernce fringe using air wedge arrangement - Thickness ofspeciemnt(t)=":str(ts)}]}))
-    def prism(self):
-        argument = self.arg[0:]
+    def prism(self): 
+        argument = self.arg[1:]
         def TR(x,y):
-            return(x+(y*0.01))  
+            return(x+(y*0.01))   
         def VA(x,y):
             return (y-x)
         def VB(x,y):
@@ -156,7 +156,10 @@ class PHY:
         yvb= Dtr_b - Ytr_b
         ovb= Dtr_b - Otr_b
         rvb= Dtr_b - Rtr_b
-
+        VA= trA/2
+        VB=trB/2
+        A= (VA+VB)/4
+        print(json.dumps({"ans":[{"Angle of prism(VB)":str(VA)+"m","Angle of (A)":str(VB)+"m"}]}))
         print(json.dumps({"ans":[{"d":str(vvb),"s":str(bvb),"e":str(bgvb),"r":str(gvb),"y":str(yvb),"o":str(ovb),"u":str(rvb)}]}))
 
 

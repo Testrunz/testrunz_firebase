@@ -2,7 +2,7 @@
 import sys, getopt, time
 import json
 from Dummy import Dummy
-#from FirstYearPhysics import FirstYPhysics
+from FirstYearPhysics import FirstYPhysics
 from physics_1 import PHY
 from FirstYearChemistry import FirstYChemistry
 from EnvironmentEngineeringLab import EVS
@@ -46,6 +46,8 @@ def main(argv):
             try:
                 if((argument[len(argument) -1] == "Vibrational_magnetometer_1")):
                     PHY(argument).VB_Mag()
+                elif((argument[len(argument) -1] == "Prism_1")):
+                    PHY(argument).prism()   
                 elif((argument[len(argument) -1] == "Air_wedge_1")):
                     PHY(argument).Air_wed()
                 elif((argument[len(argument) -1] == "Prism_1")):
