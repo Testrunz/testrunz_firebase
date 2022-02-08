@@ -72,10 +72,11 @@ const patchProcedure = async (req, res) => {
     res.json(updatedContent);
   } catch (err) {
     console.error(err);
+    res.json("error");
   }
 };
 
-const deleteProcedure = async (req, res) => {
+ const deleteProcedure = async (req, res) => {
   try {
     const removedContent = await Content.remove({ _id: req.params._id });
     res.json(removedContent);
@@ -93,3 +94,4 @@ module.exports = {
   patchProcedure,
   deleteProcedure,
 };
+     

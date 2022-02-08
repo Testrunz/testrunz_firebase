@@ -8,7 +8,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-
+import Swal from 'sweetalert2'
 import { nanoid } from "nanoid";
 
 import "./procedure.css";
@@ -39,20 +39,20 @@ const App = (props) => {
   const [state, setState] = useState({ content: "" });
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState(null);
-
+  const [showResults, setShowResults] = useState(false);
+  const onClickshow = (e) => {
+    e.preventDefault();
+    return setShowResults((prev) => !prev);
+  };
   const Search = () => {
-    const [showResults, setShowResults] = useState(false);
-    const onClick = (e) => {
-      e.preventDefault();
-      return setShowResults((prev) => !prev);
-    };
+   
     return (
       <div>
         <input
           className="button1"
           type="submit"
           value={showResults ? "HIDE" : "SHOW"}
-          onClick={onClick}
+          onClick={onClickshow}
           style={{
             height:"40px",
             position: "absolute",
@@ -144,12 +144,32 @@ const App = (props) => {
             college: collegeRef.current.value,
           })
           .then(() => {
-            console.log("sent meta info");
+            console.log("sent meta info");    
+            axios.post(`${ApiUrl}/labrotories`, {
+              name: labRef.current.value,
+              experiment: titleRef.current.value,
+            })
+            Swal.fire(
+              'success',
+              'Procedure has been updated',
+              'success',
+            )
+            setShowResults((prev) => !prev)
           })
-          .catch((err) => console.error(err));
+          .catch((err) => {
+            console.error(err)
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong Check your internet connection',
+           
+            })
+        
+          });
 
-        setMessage("Template saved successfully.");
+        // setMessage("Template saved successfully.");
         setOpen(true);
+     
       });
   };
   const handleChange = (content, editor) => {
