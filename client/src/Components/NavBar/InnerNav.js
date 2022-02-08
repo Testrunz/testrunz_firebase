@@ -53,6 +53,9 @@ const InnerNav = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const profile = () => {
+    history.push("/profile");
+   }
   return (
   <div>
      <Toolbar>
@@ -70,7 +73,7 @@ const InnerNav = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={profile}>Profile</MenuItem>
         <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
 

@@ -13,13 +13,13 @@ import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
 import Button from '@mui/material/Button';
 import { nanoid } from "nanoid";
-
+import Grid from '@material-ui/core/Grid';
 import ApiUrl from "../../../ServerApi";
 
 import "./procedure.css";
 
 import Card from "@material-ui/core/Card";
-
+import Swal from 'sweetalert2'
 const initialValue = {
   experiment: "",
   lab: "",
@@ -66,7 +66,74 @@ const App = (props) => {
   const updateRef = useRef();
   const [update, setForceUpdate] = useState(false);
 
+  const duplicate = (e) => {
+    e.preventDefault();
+    if (!titleRef.current.value ){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Must Enter Experiment Name',
+     
+      })
+    }
+    else if (!labRef.current.value){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Must Enter Lab Name',
+     
+      })
+    }
+    else if (titleRef.current.value && labRef.current.value){
 
+    axios
+      .post(`${ApiUrl}/procedures`, {
+        title: titleRef.current.value,
+        html: state.content,
+      })
+      .then((res) => {
+        axios
+          .post(`${ApiUrl}/moreInfo`, {
+            experimentno: res.data._id,
+            experiment: titleRef.current.value,
+            lab: labRef.current.value,
+            department: departmentRef.current.value||"",
+            year: yearRef.current.value||"",
+            college: collegeRef.current.value||"",
+          })
+          .then(() => {
+            // console.log("sent meta info");
+            axios.post(`${ApiUrl}/labrotories`, {
+              name: labRef.current.value,
+              experiment: titleRef.current.value,
+            })
+            Swal.fire(
+              'success',
+              'Procedure has been Created',
+              'success',
+            )
+            // setShowResults((prev) => !prev)
+          })
+          .catch((err) => {
+            console.error(err)
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong Check your internet connection',
+           
+            })
+          });
+
+        setMessage("Template saved successfully.");
+        setOpen(true);
+      });
+
+
+    }
+    else {
+
+    }
+  };
 
 
 
@@ -137,18 +204,33 @@ const App = (props) => {
         />
         <br />
         <br />
-        <Button variant="contained"  style={{ backgroundColor:"#F1C232",color:"black" ,width:"100%" }}
+        <br />
+        <br />
+        <Grid container spacing={1}>
+
+        <Grid item xs={4}>
+        <Button variant="contained"  style={{ backgroundColor:"#F1C232",color:"black" }}
           type="submit"
         >Save
           </Button>
-<br/>
-<br/>
-        <Button variant="contained" color="secondary" style={{ color:"black" ,position: "center" ,width:"100%"}}
+          </Grid>
+
+          <Grid item xs={4}>
+        <Button variant="contained" style={{ backgroundColor:"#F1C232",color:"black"  }}
           className="buttons"
           onClick={props.onclick}
-         
-   
         >cancel</Button>
+         </Grid>
+         <Grid item xs={4}>
+        <Button variant="contained" style={{ backgroundColor:"#F1C232",color:"black"  }}
+          className="buttons"
+          onClick={duplicate}
+        >Duplicate</Button>
+         </Grid>
+
+      
+
+        </Grid>
       </CardContent>
     </Card>
   );
@@ -245,9 +327,23 @@ const App = (props) => {
             _id:state1._id
           })
           .then((res) => {
-  console.log("done phase2",res.data)
-            setMessage("Template modified successfully.");
+          
+            if(res.data == "error"){
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong Check your internet connection',
+             
+              })
+            }
+            else{
+            Swal.fire(
+              'success',
+              'Procedure has been updated',
+              'success',
+            )
            setOpen(true);
+            }
           });
       });
   };
